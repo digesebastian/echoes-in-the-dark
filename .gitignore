@@ -54,6 +54,9 @@ $RECYCLE.BIN/
 # VS Code cache directory
 .vscode/
 
+# Rider cache directory
+.idea/
+
 # Gradle cache directory
 .gradle/
 
