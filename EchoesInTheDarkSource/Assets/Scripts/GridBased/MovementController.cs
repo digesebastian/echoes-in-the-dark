@@ -6,7 +6,9 @@ namespace GridBasedMovement
     public class MovementController : MonoBehaviour
     {
         [SerializeField] private bool moveDiagonally = false;
-        [SerializeField] private float speed = 5f;
+        [SerializeField] private float sneakSpeed = 1f;
+        [SerializeField] private float walkSpeed = 5f;
+        [SerializeField] private float sprintSpeed = 8f;
         [SerializeField] private LayerMask obstacle;
 
         private Animator _animator;
@@ -14,6 +16,7 @@ namespace GridBasedMovement
         private static readonly int HorizontalMovement = Animator.StringToHash("HorizontalMovement");
         private static readonly int VerticalMovement = Animator.StringToHash("VerticalMovement");
         private static readonly int IsMoving = Animator.StringToHash("IsMoving");
+        private static readonly int IsSprinting = Animator.StringToHash("IsSprinting");
         private static readonly int PreviousHorizontalMovement = Animator.StringToHash("PreviousHorizontalMovement");
         private static readonly int PreviousVerticalMovement = Animator.StringToHash("PreviousVerticalMovement");
         
@@ -42,34 +45,44 @@ namespace GridBasedMovement
                 }
 
                 Vector3 movementInput = new Vector3(_horizontalMovement, _verticalMovement);
-                UpdateAnimator(movementInput);
+                bool isSprintingInput = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
+                bool isSneakingInput = Input.GetKey(KeyCode.Space);
+                float currentSpeed = walkSpeed;
+                if (isSprintingInput)
+                {
+                    currentSpeed = sprintSpeed;
+                }
+                else if (isSneakingInput)
+                {
+                    currentSpeed = sneakSpeed;
+                }
+                
+                UpdateAnimator(movementInput, isSprintingInput);
                 
                 if (movementInput != Vector3.zero)
                 {
-                    Vector3 nextPosition = transform.position + movementInput.normalized * speed * Time.deltaTime;
+                    Vector3 nextPosition = transform.position + movementInput.normalized * currentSpeed * Time.deltaTime;
                     if (!Physics2D.OverlapCircle(nextPosition, .6f, obstacle))
                     {
                         transform.position = nextPosition;
                     }
                 }              
         }
-        private void UpdateAnimator(Vector2 direction)
+        private void UpdateAnimator(Vector2 direction, bool isSprintinginput)
         {
             bool isMoving = direction != Vector2.zero;
             _animator.SetBool(IsMoving, isMoving);
+            _animator.SetBool(IsSprinting,isMoving && isSprintinginput);
 
             if (isMoving)
             {
-                // When actively walking, update the walk animation parameters
                 _animator.SetFloat(HorizontalMovement, direction.x);
                 _animator.SetFloat(VerticalMovement, direction.y);
                 
-                // Continuously overwrite our memory with this active direction
                 _previousMovement = direction;
             }
             else
             {
-                // When stopped, feed the saved memory into the idle animation parameters
                 _animator.SetFloat(PreviousHorizontalMovement, _previousMovement.x);
                 _animator.SetFloat(PreviousVerticalMovement, _previousMovement.y);
             }
