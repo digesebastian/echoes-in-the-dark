@@ -2725,7 +2725,7 @@ Transform:
   m_GameObject: {fileID: 1193073468}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -5.5, y: 0.6, z: 0}
   m_LocalScale: {x: 960, y: 640, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3029,6 +3029,7 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 8
+  spotlight: {fileID: 0}
 --- !u!1001 &4784997314503853010
 PrefabInstance:
   m_ObjectHideFlags: 0

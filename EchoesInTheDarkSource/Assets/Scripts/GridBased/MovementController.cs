@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 namespace GridBasedMovement
 {
@@ -10,6 +11,7 @@ namespace GridBasedMovement
         [SerializeField] private LayerMask obstacle;
 
         private Animator _animator;
+        [SerializeField] private Light2D spotlight;
 
         private static readonly int HorizontalMovement = Animator.StringToHash("HorizontalMovement");
         private static readonly int VerticalMovement = Animator.StringToHash("VerticalMovement");
@@ -19,11 +21,13 @@ namespace GridBasedMovement
         
         private float _horizontalMovement;
         private float _verticalMovement;
+        private float _noiseEmitted;
         private Vector2 _previousMovement;
 
         private void Awake()
         {
             _animator = GetComponent<Animator>();
+            spotlight =  GetComponentInChildren<Light2D>();
 
             print(obstacle.value);
         }
@@ -43,10 +47,11 @@ namespace GridBasedMovement
 
                 Vector3 movementInput = new Vector3(_horizontalMovement, _verticalMovement);
                 UpdateAnimator(movementInput);
+                UpdateSpotlight(movementInput);
                 
                 if (movementInput != Vector3.zero)
                 {
-                    Vector3 nextPosition = transform.position + movementInput.normalized * speed * Time.deltaTime;
+                    Vector3 nextPosition = transform.position + speed * Time.deltaTime * movementInput.normalized;
                     if (!Physics2D.OverlapCircle(nextPosition, .6f, obstacle))
                     {
                         transform.position = nextPosition;
@@ -73,6 +78,12 @@ namespace GridBasedMovement
                 _animator.SetFloat(PreviousHorizontalMovement, _previousMovement.x);
                 _animator.SetFloat(PreviousVerticalMovement, _previousMovement.y);
             }
-        } 
+        }
+
+        private void UpdateSpotlight(Vector2 direction)
+        {
+            var isMoving = direction != Vector2.zero;
+            spotlight.pointLightOuterRadius = isMoving ? 5 : 1;
+        }
     }
 }
