@@ -1,17 +1,36 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 namespace GridBasedMovement
 {
     public class MovementController : MonoBehaviour
     {
-        [SerializeField] private bool moveDiagonally = false;
+        private enum SpeedState
+        {
+            Idle,
+            Walking,
+            Sprinting,
+            Sneaking            
+        }
+        
+        [SerializeField] private LayerMask obstacle;
         [SerializeField] private float sneakSpeed = 1f;
         [SerializeField] private float walkSpeed = 5f;
         [SerializeField] private float sprintSpeed = 8f;
-        [SerializeField] private LayerMask obstacle;
+        
+        [SerializeField] private float noiseMin = 1f;
+        [SerializeField] private float walkingNoiseMax = 10f;
+        [SerializeField] private float sprintingNoiseMax = 15f;
+        [SerializeField] private float sneakingNoiseMax = 5f;
+        
+        [SerializeField] private float noiseDecayRate = 0.1f;
+        [SerializeField] private float walkingNoiseDelta = 0.1f;
+        [SerializeField] private float sprintingNoiseDelta = 0.2f;
+        [SerializeField] private float sneakingNoiseDelta = 0.04f;
 
         private Animator _animator;
+        private Light2D _spotlight;
 
         private static readonly int HorizontalMovement = Animator.StringToHash("HorizontalMovement");
         private static readonly int VerticalMovement = Animator.StringToHash("VerticalMovement");
@@ -22,11 +41,13 @@ namespace GridBasedMovement
         
         private float _horizontalMovement;
         private float _verticalMovement;
+        private float _noiseEmitted;
         private Vector2 _previousMovement;
 
         private void Awake()
         {
             _animator = GetComponent<Animator>();
+            _spotlight =  GetComponentInChildren<Light2D>();
 
             print(obstacle.value);
         }
@@ -34,45 +55,34 @@ namespace GridBasedMovement
         private void Update()
         {
                 _horizontalMovement = Input.GetAxisRaw("Horizontal");
-                
-                if (!moveDiagonally && (_horizontalMovement > 0))
-                {
-                    _verticalMovement = 0; 
-                }
-                else
-                {
-                    _verticalMovement = Input.GetAxisRaw("Vertical");
-                }
+                _verticalMovement = Input.GetAxisRaw("Vertical");
 
                 Vector3 movementInput = new Vector3(_horizontalMovement, _verticalMovement);
+                bool isMoving =  movementInput != Vector3.zero;
                 bool isSprintingInput = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-                bool isSneakingInput = Input.GetKey(KeyCode.Space);
-                float currentSpeed = walkSpeed;
-                if (isSprintingInput)
-                {
-                    currentSpeed = sprintSpeed;
-                }
-                else if (isSneakingInput)
-                {
-                    currentSpeed = sneakSpeed;
-                }
+                bool isSneakingInput = !isSprintingInput && Input.GetKey(KeyCode.Space);
+
+                SpeedState currentSpeedState = GetSpeedState(isMoving, isSprintingInput, isSneakingInput);
+
+                UpdateAnimator(movementInput, currentSpeedState);
+                UpdateNoiseEmitted(currentSpeedState);
+                UpdateSpotlight();
+
+                if (!isMoving) return;
                 
-                UpdateAnimator(movementInput, isSprintingInput);
-                
-                if (movementInput != Vector3.zero)
+                float currentSpeed = GetSpeed(currentSpeedState);
+                Vector3 nextPosition = transform.position + (currentSpeed * Time.deltaTime * movementInput.normalized);
+                if (!Physics2D.OverlapCircle(nextPosition, .6f, obstacle))
                 {
-                    Vector3 nextPosition = transform.position + movementInput.normalized * currentSpeed * Time.deltaTime;
-                    if (!Physics2D.OverlapCircle(nextPosition, .6f, obstacle))
-                    {
-                        transform.position = nextPosition;
-                    }
-                }              
+                    transform.position = nextPosition;
+                }
         }
-        private void UpdateAnimator(Vector2 direction, bool isSprintinginput)
+
+        private void UpdateAnimator(Vector2 direction, SpeedState speedState)
         {
-            bool isMoving = direction != Vector2.zero;
+            bool isMoving = speedState != SpeedState.Idle;
             _animator.SetBool(IsMoving, isMoving);
-            _animator.SetBool(IsSprinting,isMoving && isSprintinginput);
+            _animator.SetBool(IsSprinting, speedState == SpeedState.Sprinting);
 
             if (isMoving)
             {
@@ -86,6 +96,68 @@ namespace GridBasedMovement
                 _animator.SetFloat(PreviousHorizontalMovement, _previousMovement.x);
                 _animator.SetFloat(PreviousVerticalMovement, _previousMovement.y);
             }
-        } 
+        }
+
+        private void UpdateNoiseEmitted(SpeedState speedState)
+        {
+            var currentNoise = _noiseEmitted;
+            
+            // find the maximum noise emittable at this speed state
+            var noiseMax = speedState switch
+            {
+                SpeedState.Sprinting => sprintingNoiseMax,
+                SpeedState.Sneaking => sneakingNoiseMax,
+                SpeedState.Walking => walkingNoiseMax,
+                _ => 1f
+            };
+
+            if (currentNoise > noiseMax)
+            {
+                // if the current noise is higher than the max for the speed state decrease it
+                currentNoise -= noiseDecayRate;
+                _noiseEmitted = Mathf.Max(noiseMin, currentNoise);
+            }
+            else
+            {
+                // if not increase the noise according to the speed state
+                currentNoise += speedState switch
+                {
+                    SpeedState.Walking => walkingNoiseDelta,
+                    SpeedState.Sprinting => sprintingNoiseDelta,
+                    SpeedState.Sneaking => sneakingNoiseDelta,
+                    _ => 0f
+                };
+                
+                _noiseEmitted = Mathf.Min(currentNoise, noiseMax);
+            }
+        }
+
+        private void UpdateSpotlight()
+        {
+            _spotlight.pointLightOuterRadius = _noiseEmitted;
+        }
+
+        private SpeedState GetSpeedState(bool isMoving, bool isSprinting, bool isSneaking)
+        {
+            if (!isMoving)
+            {
+                return SpeedState.Idle;
+            }
+            if (isSprinting)
+            {
+                return SpeedState.Sprinting;
+            }
+            return isSneaking ? SpeedState.Sneaking : SpeedState.Walking;
+        }
+        private float GetSpeed(SpeedState state)
+        {
+            return state switch
+            {
+                SpeedState.Walking => walkSpeed,
+                SpeedState.Sprinting => sprintSpeed,
+                SpeedState.Sneaking => sneakSpeed,
+                _ => 0f
+            };
+        }
     }
 }

@@ -2725,7 +2725,7 @@ Transform:
   m_GameObject: {fileID: 1193073468}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -5.5, y: 0.6, z: 0}
   m_LocalScale: {x: 960, y: 640, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3024,11 +3024,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea13ebd0d0d10445686fdd7230df2cf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridBasedMovement.MovementController
-  moveDiagonally: 1
-  speed: 5
   obstacle:
     serializedVersion: 2
     m_Bits: 8
+  sneakSpeed: 1
+  walkSpeed: 5
+  sprintSpeed: 8
+  noiseMin: 1
+  walkingNoiseMax: 8
+  sprintingNoiseMax: 15
+  sneakingNoiseMax: 5
+  noiseDecayRate: 0.08
+  walkingNoiseDelta: 0.1
+  sprintingNoiseDelta: 0.2
+  sneakingNoiseDelta: 0.04
 --- !u!1001 &4784997314503853010
 PrefabInstance:
   m_ObjectHideFlags: 0
