@@ -13,10 +13,11 @@ namespace GridBasedMovement
         [SerializeField] private LayerMask obstacle;
         [SerializeField] private float noiseMin = 1f;
         [SerializeField] private float noiseMax = 10f;
-        [SerializeField] private float walkingNoiseDelta = 0.5f;
+        [SerializeField] private float walkingNoiseDelta = 0.1f;
+        [SerializeField] private float sprintingNoiseDelta = 0.2f;
 
         private Animator _animator;
-        [SerializeField] private Light2D spotlight;
+        private Light2D _spotlight;
 
         private static readonly int HorizontalMovement = Animator.StringToHash("HorizontalMovement");
         private static readonly int VerticalMovement = Animator.StringToHash("VerticalMovement");
@@ -33,7 +34,7 @@ namespace GridBasedMovement
         private void Awake()
         {
             _animator = GetComponent<Animator>();
-            spotlight =  GetComponentInChildren<Light2D>();
+            _spotlight =  GetComponentInChildren<Light2D>();
 
             print(obstacle.value);
         }
@@ -53,7 +54,7 @@ namespace GridBasedMovement
 
                 Vector3 movementInput = new Vector3(_horizontalMovement, _verticalMovement);
                 bool isSprintingInput = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-                bool isSneakingInput = Input.GetKey(KeyCode.Space);
+                bool isSneakingInput = !isSprintingInput && Input.GetKey(KeyCode.Space);
                 float currentSpeed = walkSpeed;
                 if (isSprintingInput)
                 {
@@ -63,14 +64,14 @@ namespace GridBasedMovement
                 {
                     currentSpeed = sneakSpeed;
                 }
-                
+
                 UpdateAnimator(movementInput, isSprintingInput);
                 UpdateNoiseEmitted(movementInput);
-                UpdateSpotlight(movementInput);
+                UpdateSpotlight();
                 
                 if (movementInput != Vector3.zero)
                 {
-                    Vector3 nextPosition = transform.position + movementInput.normalized * currentSpeed * Time.deltaTime;
+                    Vector3 nextPosition = transform.position + (currentSpeed * Time.deltaTime * movementInput.normalized);
                     if (!Physics2D.OverlapCircle(nextPosition, .6f, obstacle))
                     {
                         transform.position = nextPosition;
@@ -113,9 +114,9 @@ namespace GridBasedMovement
             _noiseEmitted = Mathf.Clamp(currentNoise, noiseMin, noiseMax);
         }
 
-        private void UpdateSpotlight(Vector2 direction)
+        private void UpdateSpotlight()
         {
-            spotlight.pointLightOuterRadius = _noiseEmitted;
+            _spotlight.pointLightOuterRadius = _noiseEmitted;
         }
     }
 }
