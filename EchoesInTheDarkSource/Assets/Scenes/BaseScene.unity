@@ -3031,10 +3031,10 @@ MonoBehaviour:
   walkSpeed: 5
   sprintSpeed: 8
   noiseMin: 1
-  walkingNoiseMax: 10
+  walkingNoiseMax: 8
   sprintingNoiseMax: 15
   sneakingNoiseMax: 5
-  idleNoiseDelta: -0.1
+  noiseDecayRate: 0.08
   walkingNoiseDelta: 0.1
   sprintingNoiseDelta: 0.2
   sneakingNoiseDelta: 0.04

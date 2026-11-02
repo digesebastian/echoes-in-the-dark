@@ -24,7 +24,7 @@ namespace GridBasedMovement
         [SerializeField] private float sprintingNoiseMax = 15f;
         [SerializeField] private float sneakingNoiseMax = 5f;
         
-        [SerializeField] private float idleNoiseDelta = -0.1f;
+        [SerializeField] private float noiseDecayRate = 0.1f;
         [SerializeField] private float walkingNoiseDelta = 0.1f;
         [SerializeField] private float sprintingNoiseDelta = 0.2f;
         [SerializeField] private float sneakingNoiseDelta = 0.04f;
@@ -101,22 +101,35 @@ namespace GridBasedMovement
         private void UpdateNoiseEmitted(SpeedState speedState)
         {
             var currentNoise = _noiseEmitted;
-            currentNoise += speedState switch
-            {
-                SpeedState.Idle => idleNoiseDelta,
-                SpeedState.Walking => walkingNoiseDelta,
-                SpeedState.Sprinting => sprintingNoiseDelta,
-                SpeedState.Sneaking => sprintingNoiseDelta,
-                _ => 0f
-            };
+            
+            // find the maximum noise emittable at this speed state
             var noiseMax = speedState switch
             {
                 SpeedState.Sprinting => sprintingNoiseMax,
                 SpeedState.Sneaking => sneakingNoiseMax,
-                _ => walkingNoiseMax
+                SpeedState.Walking => walkingNoiseMax,
+                _ => 1f
             };
+
+            if (currentNoise > noiseMax)
+            {
+                // if the current noise is higher than the max for the speed state decrease it
+                currentNoise -= noiseDecayRate;
+                _noiseEmitted = Mathf.Max(noiseMin, currentNoise);
+            }
+            else
+            {
+                // if not increase the noise according to the speed state
+                currentNoise += speedState switch
+                {
+                    SpeedState.Walking => walkingNoiseDelta,
+                    SpeedState.Sprinting => sprintingNoiseDelta,
+                    SpeedState.Sneaking => sneakingNoiseDelta,
+                    _ => 0f
+                };
                 
-             _noiseEmitted = Mathf.Clamp(currentNoise, noiseMin, noiseMax);
+                _noiseEmitted = Mathf.Min(currentNoise, noiseMax);
+            }
         }
 
         private void UpdateSpotlight()
