@@ -6,15 +6,28 @@ namespace GridBasedMovement
 {
     public class MovementController : MonoBehaviour
     {
-        [SerializeField] private bool moveDiagonally = false;
+        private enum SpeedState
+        {
+            Idle,
+            Walking,
+            Sprinting,
+            Sneaking            
+        }
+        
+        [SerializeField] private LayerMask obstacle;
         [SerializeField] private float sneakSpeed = 1f;
         [SerializeField] private float walkSpeed = 5f;
         [SerializeField] private float sprintSpeed = 8f;
-        [SerializeField] private LayerMask obstacle;
+        
         [SerializeField] private float noiseMin = 1f;
-        [SerializeField] private float noiseMax = 10f;
+        [SerializeField] private float walkingNoiseMax = 10f;
+        [SerializeField] private float sprintingNoiseMax = 15f;
+        [SerializeField] private float sneakingNoiseMax = 5f;
+        
+        [SerializeField] private float idleNoiseDelta = -0.1f;
         [SerializeField] private float walkingNoiseDelta = 0.1f;
         [SerializeField] private float sprintingNoiseDelta = 0.2f;
+        [SerializeField] private float sneakingNoiseDelta = 0.04f;
 
         private Animator _animator;
         private Light2D _spotlight;
@@ -42,48 +55,34 @@ namespace GridBasedMovement
         private void Update()
         {
                 _horizontalMovement = Input.GetAxisRaw("Horizontal");
-                
-                if (!moveDiagonally && (_horizontalMovement > 0))
-                {
-                    _verticalMovement = 0; 
-                }
-                else
-                {
-                    _verticalMovement = Input.GetAxisRaw("Vertical");
-                }
+                _verticalMovement = Input.GetAxisRaw("Vertical");
 
                 Vector3 movementInput = new Vector3(_horizontalMovement, _verticalMovement);
+                bool isMoving =  movementInput != Vector3.zero;
                 bool isSprintingInput = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
                 bool isSneakingInput = !isSprintingInput && Input.GetKey(KeyCode.Space);
-                float currentSpeed = walkSpeed;
-                if (isSprintingInput)
-                {
-                    currentSpeed = sprintSpeed;
-                }
-                else if (isSneakingInput)
-                {
-                    currentSpeed = sneakSpeed;
-                }
 
-                UpdateAnimator(movementInput, isSprintingInput);
-                UpdateNoiseEmitted(movementInput);
+                SpeedState currentSpeedState = GetSpeedState(isMoving, isSprintingInput, isSneakingInput);
+
+                UpdateAnimator(movementInput, currentSpeedState);
+                UpdateNoiseEmitted(currentSpeedState);
                 UpdateSpotlight();
+
+                if (!isMoving) return;
                 
-                if (movementInput != Vector3.zero)
+                float currentSpeed = GetSpeed(currentSpeedState);
+                Vector3 nextPosition = transform.position + (currentSpeed * Time.deltaTime * movementInput.normalized);
+                if (!Physics2D.OverlapCircle(nextPosition, .6f, obstacle))
                 {
-                    Vector3 nextPosition = transform.position + (currentSpeed * Time.deltaTime * movementInput.normalized);
-                    if (!Physics2D.OverlapCircle(nextPosition, .6f, obstacle))
-                    {
-                        transform.position = nextPosition;
-                    }
-                }              
+                    transform.position = nextPosition;
+                }
         }
 
-        private void UpdateAnimator(Vector2 direction, bool isSprintinginput)
+        private void UpdateAnimator(Vector2 direction, SpeedState speedState)
         {
-            bool isMoving = direction != Vector2.zero;
+            bool isMoving = speedState != SpeedState.Idle;
             _animator.SetBool(IsMoving, isMoving);
-            _animator.SetBool(IsSprinting,isMoving && isSprintinginput);
+            _animator.SetBool(IsSprinting, speedState == SpeedState.Sprinting);
 
             if (isMoving)
             {
@@ -99,24 +98,53 @@ namespace GridBasedMovement
             }
         }
 
-        private void UpdateNoiseEmitted(Vector2 movementInput)
+        private void UpdateNoiseEmitted(SpeedState speedState)
         {
             var currentNoise = _noiseEmitted;
-            var isMoving = movementInput != Vector2.zero;
-            if (isMoving)
+            currentNoise += speedState switch
             {
-                currentNoise = currentNoise + walkingNoiseDelta;
-            }
-            else
+                SpeedState.Idle => idleNoiseDelta,
+                SpeedState.Walking => walkingNoiseDelta,
+                SpeedState.Sprinting => sprintingNoiseDelta,
+                SpeedState.Sneaking => sprintingNoiseDelta,
+                _ => 0f
+            };
+            var noiseMax = speedState switch
             {
-                currentNoise = currentNoise - walkingNoiseDelta;
-            }
-            _noiseEmitted = Mathf.Clamp(currentNoise, noiseMin, noiseMax);
+                SpeedState.Sprinting => sprintingNoiseMax,
+                SpeedState.Sneaking => sneakingNoiseMax,
+                _ => walkingNoiseMax
+            };
+                
+             _noiseEmitted = Mathf.Clamp(currentNoise, noiseMin, noiseMax);
         }
 
         private void UpdateSpotlight()
         {
             _spotlight.pointLightOuterRadius = _noiseEmitted;
+        }
+
+        private SpeedState GetSpeedState(bool isMoving, bool isSprinting, bool isSneaking)
+        {
+            if (!isMoving)
+            {
+                return SpeedState.Idle;
+            }
+            if (isSprinting)
+            {
+                return SpeedState.Sprinting;
+            }
+            return isSneaking ? SpeedState.Sneaking : SpeedState.Walking;
+        }
+        private float GetSpeed(SpeedState state)
+        {
+            return state switch
+            {
+                SpeedState.Walking => walkSpeed,
+                SpeedState.Sprinting => sprintSpeed,
+                SpeedState.Sneaking => sneakSpeed,
+                _ => 0f
+            };
         }
     }
 }
