@@ -9,6 +9,9 @@ namespace GridBasedMovement
         [SerializeField] private bool moveDiagonally = false;
         [SerializeField] private float speed = 5f;
         [SerializeField] private LayerMask obstacle;
+        [SerializeField] private float noiseMin = 1f;
+        [SerializeField] private float noiseMax = 10f;
+        [SerializeField] private float walkingNoiseDelta = 0.5f;
 
         private Animator _animator;
         [SerializeField] private Light2D spotlight;
@@ -47,6 +50,7 @@ namespace GridBasedMovement
 
                 Vector3 movementInput = new Vector3(_horizontalMovement, _verticalMovement);
                 UpdateAnimator(movementInput);
+                UpdateNoiseEmitted(movementInput);
                 UpdateSpotlight(movementInput);
                 
                 if (movementInput != Vector3.zero)
@@ -58,6 +62,7 @@ namespace GridBasedMovement
                     }
                 }              
         }
+
         private void UpdateAnimator(Vector2 direction)
         {
             bool isMoving = direction != Vector2.zero;
@@ -80,10 +85,24 @@ namespace GridBasedMovement
             }
         }
 
+        private void UpdateNoiseEmitted(Vector2 movementInput)
+        {
+            var currentNoise = _noiseEmitted;
+            var isMoving = movementInput != Vector2.zero;
+            if (isMoving)
+            {
+                currentNoise = currentNoise + walkingNoiseDelta;
+            }
+            else
+            {
+                currentNoise = currentNoise - walkingNoiseDelta;
+            }
+            _noiseEmitted = Mathf.Clamp(currentNoise, noiseMin, noiseMax);
+        }
+
         private void UpdateSpotlight(Vector2 direction)
         {
-            var isMoving = direction != Vector2.zero;
-            spotlight.pointLightOuterRadius = isMoving ? 5 : 1;
+            spotlight.pointLightOuterRadius = _noiseEmitted;
         }
     }
 }

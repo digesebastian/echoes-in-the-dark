@@ -3029,6 +3029,9 @@ MonoBehaviour:
   obstacle:
     serializedVersion: 2
     m_Bits: 8
+  noiseMin: 1
+  noiseMax: 10
+  walkingNoiseDelta: 0.1
   spotlight: {fileID: 0}
 --- !u!1001 &4784997314503853010
 PrefabInstance:
