@@ -48,6 +48,7 @@ namespace GridBasedMovement
         {
             _animator = GetComponent<Animator>();
             _spotlight =  GetComponentInChildren<Light2D>();
+            _noiseEmitted = noiseMin;
 
             print(obstacle.value);
         }
