@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.InputSystem;
 
 namespace GridBasedMovement
 {
@@ -13,6 +14,8 @@ namespace GridBasedMovement
             Sprinting,
             Sneaking            
         }
+        
+        public InputAction moveAction;
         
         [SerializeField] private LayerMask obstacle;
         [SerializeField] private float sneakSpeed = 1f;
@@ -49,30 +52,28 @@ namespace GridBasedMovement
             _animator = GetComponent<Animator>();
             _spotlight =  GetComponentInChildren<Light2D>();
             _noiseEmitted = noiseMin;
-
-            print(obstacle.value);
+            
+            moveAction.Enable();
         }
 
         private void Update()
         {
-                _horizontalMovement = Input.GetAxisRaw("Horizontal");
-                _verticalMovement = Input.GetAxisRaw("Vertical");
-
-                Vector3 movementInput = new Vector3(_horizontalMovement, _verticalMovement);
-                bool isMoving =  movementInput != Vector3.zero;
-                bool isSprintingInput = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-                bool isSneakingInput = !isSprintingInput && Input.GetKey(KeyCode.Space);
+                Vector2 movementInput = moveAction.ReadValue<Vector2>();
+                bool isMoving =  movementInput != Vector2.zero;
+                bool isSprintingInput = Keyboard.current.shiftKey.isPressed;
+                bool isSneakingInput = !isSprintingInput && Keyboard.current.spaceKey.isPressed;
 
                 SpeedState currentSpeedState = GetSpeedState(isMoving, isSprintingInput, isSneakingInput);
 
                 UpdateAnimator(movementInput, currentSpeedState);
                 UpdateNoiseEmitted(currentSpeedState);
-                UpdateSpotlight();
+                UpdateSpotlight(); 
 
                 if (!isMoving) return;
                 
                 float currentSpeed = GetSpeed(currentSpeedState);
-                Vector3 nextPosition = transform.position + (currentSpeed * Time.deltaTime * movementInput.normalized);
+                Vector2 currentPosition = transform.position;
+                Vector2 nextPosition = currentPosition + (currentSpeed * Time.deltaTime * movementInput.normalized);
                 if (!Physics2D.OverlapCircle(nextPosition, .6f, obstacle))
                 {
                     transform.position = nextPosition;
