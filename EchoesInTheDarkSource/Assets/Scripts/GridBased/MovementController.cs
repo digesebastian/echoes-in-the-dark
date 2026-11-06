@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.InputSystem;
 
 namespace GridBasedMovement
 {
@@ -13,8 +14,11 @@ namespace GridBasedMovement
             Sprinting,
             Sneaking            
         }
+
+        Rigidbody2D rb;
         
-        [SerializeField] private LayerMask obstacle;
+        public InputAction moveAction;
+        
         [SerializeField] private float sneakSpeed = 1f;
         [SerializeField] private float walkSpeed = 5f;
         [SerializeField] private float sprintSpeed = 8f;
@@ -46,36 +50,31 @@ namespace GridBasedMovement
 
         private void Awake()
         {
+            rb = GetComponent<Rigidbody2D>();
+            
             _animator = GetComponent<Animator>();
             _spotlight =  GetComponentInChildren<Light2D>();
-
-            print(obstacle.value);
+            _noiseEmitted = noiseMin;
+            
+            moveAction.Enable();
         }
 
         private void Update()
         {
-                _horizontalMovement = Input.GetAxisRaw("Horizontal");
-                _verticalMovement = Input.GetAxisRaw("Vertical");
+            Vector2 movementInput = moveAction.ReadValue<Vector2>();
+            bool isMoving =  movementInput != Vector2.zero;
+            bool isSprintingInput = Keyboard.current.shiftKey.isPressed;
+            bool isSneakingInput = !isSprintingInput && Keyboard.current.spaceKey.isPressed;
 
-                Vector3 movementInput = new Vector3(_horizontalMovement, _verticalMovement);
-                bool isMoving =  movementInput != Vector3.zero;
-                bool isSprintingInput = Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift);
-                bool isSneakingInput = !isSprintingInput && Input.GetKey(KeyCode.Space);
+            SpeedState currentSpeedState = GetSpeedState(isMoving, isSprintingInput, isSneakingInput);
 
-                SpeedState currentSpeedState = GetSpeedState(isMoving, isSprintingInput, isSneakingInput);
-
-                UpdateAnimator(movementInput, currentSpeedState);
-                UpdateNoiseEmitted(currentSpeedState);
-                UpdateSpotlight();
-
-                if (!isMoving) return;
+            UpdateAnimator(movementInput, currentSpeedState);
+            UpdateNoiseEmitted(currentSpeedState);
+            UpdateSpotlight(); 
                 
-                float currentSpeed = GetSpeed(currentSpeedState);
-                Vector3 nextPosition = transform.position + (currentSpeed * Time.deltaTime * movementInput.normalized);
-                if (!Physics2D.OverlapCircle(nextPosition, .6f, obstacle))
-                {
-                    transform.position = nextPosition;
-                }
+            float currentSpeed = GetSpeed(currentSpeedState);
+                
+            rb.linearVelocity = currentSpeed * movementInput.normalized;
         }
 
         private void UpdateAnimator(Vector2 direction, SpeedState speedState)
