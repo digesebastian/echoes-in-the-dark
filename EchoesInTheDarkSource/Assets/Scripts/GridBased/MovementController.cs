@@ -14,10 +14,11 @@ namespace GridBasedMovement
             Sprinting,
             Sneaking            
         }
+
+        Rigidbody2D rb;
         
         public InputAction moveAction;
         
-        [SerializeField] private LayerMask obstacle;
         [SerializeField] private float sneakSpeed = 1f;
         [SerializeField] private float walkSpeed = 5f;
         [SerializeField] private float sprintSpeed = 8f;
@@ -49,6 +50,8 @@ namespace GridBasedMovement
 
         private void Awake()
         {
+            rb = GetComponent<Rigidbody2D>();
+            
             _animator = GetComponent<Animator>();
             _spotlight =  GetComponentInChildren<Light2D>();
             _noiseEmitted = noiseMin;
@@ -58,26 +61,20 @@ namespace GridBasedMovement
 
         private void Update()
         {
-                Vector2 movementInput = moveAction.ReadValue<Vector2>();
-                bool isMoving =  movementInput != Vector2.zero;
-                bool isSprintingInput = Keyboard.current.shiftKey.isPressed;
-                bool isSneakingInput = !isSprintingInput && Keyboard.current.spaceKey.isPressed;
+            Vector2 movementInput = moveAction.ReadValue<Vector2>();
+            bool isMoving =  movementInput != Vector2.zero;
+            bool isSprintingInput = Keyboard.current.shiftKey.isPressed;
+            bool isSneakingInput = !isSprintingInput && Keyboard.current.spaceKey.isPressed;
 
-                SpeedState currentSpeedState = GetSpeedState(isMoving, isSprintingInput, isSneakingInput);
+            SpeedState currentSpeedState = GetSpeedState(isMoving, isSprintingInput, isSneakingInput);
 
-                UpdateAnimator(movementInput, currentSpeedState);
-                UpdateNoiseEmitted(currentSpeedState);
-                UpdateSpotlight(); 
-
-                if (!isMoving) return;
+            UpdateAnimator(movementInput, currentSpeedState);
+            UpdateNoiseEmitted(currentSpeedState);
+            UpdateSpotlight(); 
                 
-                float currentSpeed = GetSpeed(currentSpeedState);
-                Vector2 currentPosition = transform.position;
-                Vector2 nextPosition = currentPosition + (currentSpeed * Time.deltaTime * movementInput.normalized);
-                if (!Physics2D.OverlapCircle(nextPosition, .6f, obstacle))
-                {
-                    transform.position = nextPosition;
-                }
+            float currentSpeed = GetSpeed(currentSpeedState);
+                
+            rb.linearVelocity = currentSpeed * movementInput.normalized;
         }
 
         private void UpdateAnimator(Vector2 direction, SpeedState speedState)
