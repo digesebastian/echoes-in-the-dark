@@ -31,6 +31,8 @@ namespace GridBasedMovement
 
         private Animator _animator;
         private Light2D _spotlight;
+        private CircleCollider2D _playerCollider;
+        [SerializeField] private float shadowFade = 1.0f;
 
         private static readonly int HorizontalMovement = Animator.StringToHash("HorizontalMovement");
         private static readonly int VerticalMovement = Animator.StringToHash("VerticalMovement");
@@ -48,6 +50,7 @@ namespace GridBasedMovement
         {
             _animator = GetComponent<Animator>();
             _spotlight =  GetComponentInChildren<Light2D>();
+            _playerCollider = GetComponentInChildren<CircleCollider2D>();
 
             print(obstacle.value);
         }
@@ -135,6 +138,11 @@ namespace GridBasedMovement
         private void UpdateSpotlight()
         {
             _spotlight.pointLightOuterRadius = _noiseEmitted;
+
+            if (_playerCollider != null)
+            {
+                _playerCollider.radius = _spotlight.pointLightOuterRadius - shadowFade;
+            }
         }
 
         private SpeedState GetSpeedState(bool isMoving, bool isSprinting, bool isSneaking)
