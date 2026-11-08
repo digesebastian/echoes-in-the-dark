@@ -4,16 +4,16 @@ namespace Player
 {
     public class PlayerState : MonoBehaviour
     {
-        private Vector2 facingDirection = Vector2.down;
+        private Vector2 _facingDirection = Vector2.down;
 
         public Vector2 GetFacingDirection()
         {
-            return facingDirection;
+            return _facingDirection;
         }
         
         public void SetFacingDirection(Vector2 newDirection)
         {
-            facingDirection = newDirection.normalized;
+            _facingDirection = newDirection.normalized;
         }
     }
 }

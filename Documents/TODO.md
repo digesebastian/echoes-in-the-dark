@@ -7,7 +7,7 @@
 - [x] v1: throw object from center of character. Throw a hardcoded distance in front of character.
 - [x] Add player state for other scripts to access
 - [] make object land properly
-  - [] make object stay a few frames then disappear
+  - [x] make object stay a few seconds after landing then disappear
   - [] Make object emit a circle of light
 - [] Add animation for throwing
   - [] create curve for object
