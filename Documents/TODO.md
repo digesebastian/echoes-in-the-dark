@@ -4,7 +4,7 @@
 
 ## Throwing
 
-- [] v1: throw object from center of character
+- [] v1: throw object from center of character. Throw a hardcoded distance in front of character.
 - [] Add animation for throwing
 - [] 
 
