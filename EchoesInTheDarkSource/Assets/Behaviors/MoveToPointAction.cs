@@ -6,11 +6,11 @@ using Action = Unity.Behavior.Action;
 using Unity.Properties;
 
 [Serializable, GeneratePropertyBag]
-[NodeDescription(name: "Move to Point", story: "Guard moves to player point", category: "Action", id: "a9402ecb46dff5611799c6a0c55e026d")]
+[NodeDescription(name: "Move to Point", story: "Move to first point in [list]", category: "Action", id: "1007a5536b208a6d9bf80bafe802b46d")]
 public partial class MoveToPointAction : Action
 {
+    [SerializeReference] public BlackboardVariable<List<GameObject>> List;
     [SerializeReference] public BlackboardVariable<GameObject> Player;
-    [SerializeReference] public BlackboardVariable<List<GameObject>> Waypoints;
     [SerializeReference] public BlackboardVariable<float> Speed;
     
     private enum SpeedState
@@ -33,17 +33,17 @@ public partial class MoveToPointAction : Action
 
     protected override Status OnStart()
     {
-        if (Waypoints.Value == null || Waypoints.Value.Count == 0) return Status.Failure;
+        if (List.Value == null || List.Value.Count == 0) return Status.Failure;
         _animator = GameObject.GetComponent<Animator>();
         return Status.Running;
     }
 
     protected override Status OnUpdate()
     {
-        var waypointsList = Waypoints.Value;
-        if (waypointsList == null || waypointsList.Count == 0) return Status.Failure;
+        var ListList = List.Value;
+        if (ListList == null || ListList.Count == 0) return Status.Failure;
         
-        Transform target = waypointsList[0].transform; // target always high_points[0]
+        Transform target = ListList[0].transform; // target always the first point in the list
         
         Vector2 direction = (Vector2)target.position - (Vector2)GameObject.transform.position;
         if (direction != Vector2.zero)

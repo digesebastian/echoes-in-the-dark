@@ -20,9 +20,9 @@ namespace GridBasedMovement
         [SerializeField] private float sprintSpeed = 8f;
         
         [SerializeField] private float noiseMin = 1f;
-        [SerializeField] private float walkingNoiseMax = 10f;
-        [SerializeField] private float sprintingNoiseMax = 15f;
-        [SerializeField] private float sneakingNoiseMax = 5f;
+        [SerializeField] private float walkingNoiseMax = 5f; // 10
+        [SerializeField] private float sprintingNoiseMax = 10f; // 15
+        [SerializeField] private float sneakingNoiseMax = 2f; // 5
         
         [SerializeField] private float noiseDecayRate = 0.1f;
         [SerializeField] private float walkingNoiseDelta = 0.1f;
