@@ -3077,6 +3077,7 @@ MonoBehaviour:
       m_Flags: 8
     m_Flags: 0
     m_Priority: 0
+  facingDirection: {x: 0, y: 0}
   sneakSpeed: 1
   walkSpeed: 5
   sprintSpeed: 8
@@ -3174,7 +3175,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Thrower
   projectilePrefab: {fileID: 3692471492693045032, guid: 4ab3d03e17992154781f0f85518c1f03, type: 3}
-  target: {fileID: 1805606734}
+  throwForce: 5
 --- !u!1 &1805606733
 GameObject:
   m_ObjectHideFlags: 0

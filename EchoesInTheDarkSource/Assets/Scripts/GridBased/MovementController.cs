@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.InputSystem;
 
@@ -18,6 +17,7 @@ namespace GridBasedMovement
         Rigidbody2D rb;
         
         public InputAction moveAction;
+        public Vector2 facingDirection;
         
         [SerializeField] private float sneakSpeed = 1f;
         [SerializeField] private float walkSpeed = 5f;
@@ -46,7 +46,6 @@ namespace GridBasedMovement
         private float _horizontalMovement;
         private float _verticalMovement;
         private float _noiseEmitted;
-        private Vector2 _previousMovement;
 
         private void Awake()
         {
@@ -88,12 +87,12 @@ namespace GridBasedMovement
                 _animator.SetFloat(HorizontalMovement, direction.x);
                 _animator.SetFloat(VerticalMovement, direction.y);
                 
-                _previousMovement = direction;
+                facingDirection = direction;
             }
             else
             {
-                _animator.SetFloat(PreviousHorizontalMovement, _previousMovement.x);
-                _animator.SetFloat(PreviousVerticalMovement, _previousMovement.y);
+                _animator.SetFloat(PreviousHorizontalMovement, facingDirection.x);
+                _animator.SetFloat(PreviousVerticalMovement, facingDirection.y);
             }
         }
 
