@@ -5,7 +5,7 @@
 ## Throwing
 
 - [x] v1: throw object from center of character. Throw a hardcoded distance in front of character.
-- [] Add player state for other scripts to access
+- [x] Add player state for other scripts to access
 - [] make object land properly
   - [] make object stay a few frames then disappear
   - [] Make object emit a circle of light

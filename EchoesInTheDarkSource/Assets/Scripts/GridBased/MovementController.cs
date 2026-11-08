@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Player;
+using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.InputSystem;
 
@@ -15,9 +16,10 @@ namespace GridBasedMovement
         }
 
         Rigidbody2D rb;
+
+        private PlayerState _playerState;
         
         public InputAction moveAction;
-        public Vector2 facingDirection;
         
         [SerializeField] private float sneakSpeed = 1f;
         [SerializeField] private float walkSpeed = 5f;
@@ -54,6 +56,8 @@ namespace GridBasedMovement
             _animator = GetComponent<Animator>();
             _spotlight =  GetComponentInChildren<Light2D>();
             _noiseEmitted = noiseMin;
+
+            _playerState = GetComponent<PlayerState>();
             
             moveAction.Enable();
         }
@@ -87,12 +91,12 @@ namespace GridBasedMovement
                 _animator.SetFloat(HorizontalMovement, direction.x);
                 _animator.SetFloat(VerticalMovement, direction.y);
                 
-                facingDirection = direction;
+                _playerState.SetFacingDirection(direction);
             }
             else
             {
-                _animator.SetFloat(PreviousHorizontalMovement, facingDirection.x);
-                _animator.SetFloat(PreviousVerticalMovement, facingDirection.y);
+                _animator.SetFloat(PreviousHorizontalMovement, _playerState.GetFacingDirection().x);
+                _animator.SetFloat(PreviousVerticalMovement, _playerState.GetFacingDirection().y);
             }
         }
 
