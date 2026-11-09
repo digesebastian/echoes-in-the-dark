@@ -2868,6 +2868,10 @@ PrefabInstance:
       propertyPath: m_FalloffIntensity
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 3276962798955013394, guid: 904742295e8bd7c419551f6281a34b53, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3505015222913705362, guid: 904742295e8bd7c419551f6281a34b53, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
