@@ -9,9 +9,9 @@
 - [x] make coin land properly
   - [x] make coin stay a few seconds after landing then disappear
   - [x] Make coin emit a circle of light
-- [] Create throwing bar
-  - [] Bar charges when holding down throw key, then throws when released
-  - [] Control throwing force according to bar
+- [x] Create throwing bar
+  - [x] Bar charges when holding down throw key, then throws when released
+  - [x] Control throwing force according to bar
 - [] Add collision for coin
 - [] Add animation for throwing
   - [] create curve for thrown coin

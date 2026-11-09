@@ -300,6 +300,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Thrower
   projectilePrefab: {fileID: 3692471492693045032, guid: 4ab3d03e17992154781f0f85518c1f03, type: 3}
   throwForce: 5
+  chargeBar: {fileID: 3276962798955013394}
+  chargeBarSprites:
+  - {fileID: 6244038568430289735, guid: edc60c710d58bfc4dad4a0dc50a29e75, type: 3}
+  - {fileID: -7752052920229787659, guid: edc60c710d58bfc4dad4a0dc50a29e75, type: 3}
+  - {fileID: 7781501485436931941, guid: edc60c710d58bfc4dad4a0dc50a29e75, type: 3}
+  - {fileID: -8768102436842475884, guid: edc60c710d58bfc4dad4a0dc50a29e75, type: 3}
+  - {fileID: 8336548132823097144, guid: edc60c710d58bfc4dad4a0dc50a29e75, type: 3}
+  - {fileID: -2867701895880927618, guid: edc60c710d58bfc4dad4a0dc50a29e75, type: 3}
+  - {fileID: -272241430132163773, guid: edc60c710d58bfc4dad4a0dc50a29e75, type: 3}
+  - {fileID: 4714008348082847326, guid: edc60c710d58bfc4dad4a0dc50a29e75, type: 3}
+  - {fileID: -5874693532834850955, guid: edc60c710d58bfc4dad4a0dc50a29e75, type: 3}
+  - {fileID: -1705328764115090248, guid: edc60c710d58bfc4dad4a0dc50a29e75, type: 3}
+  - {fileID: 5223151454623392128, guid: edc60c710d58bfc4dad4a0dc50a29e75, type: 3}
 --- !u!50 &4192621817121935373
 Rigidbody2D:
   serializedVersion: 5

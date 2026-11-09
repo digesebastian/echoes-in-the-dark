@@ -2856,6 +2856,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 271773968144178313, guid: 904742295e8bd7c419551f6281a34b53, type: 3}
+      propertyPath: maxChargeTime
+      value: 0.8
+      objectReference: {fileID: 0}
     - target: {fileID: 1108455950996815331, guid: 904742295e8bd7c419551f6281a34b53, type: 3}
       propertyPath: m_Intensity
       value: 1
@@ -2867,6 +2871,10 @@ PrefabInstance:
     - target: {fileID: 1108455950996815331, guid: 904742295e8bd7c419551f6281a34b53, type: 3}
       propertyPath: m_FalloffIntensity
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1371596413561342461, guid: 904742295e8bd7c419551f6281a34b53, type: 3}
+      propertyPath: noiseMin
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3276962798955013394, guid: 904742295e8bd7c419551f6281a34b53, type: 3}
       propertyPath: m_IsActive
