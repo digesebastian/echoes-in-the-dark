@@ -2,25 +2,32 @@
 
 # Need to have
 
-## Throwing
+## Throwing coin
 
-- [x] v1: throw object from center of character. Throw a hardcoded distance in front of character.
+- [x] v1: throw coin from center of character. Throw a hardcoded distance in front of character.
 - [x] Add player state for other scripts to access
-- [] make object land properly
-  - [x] make object stay a few seconds after landing then disappear
-  - [] Make object emit a circle of light
+- [x] make coin land properly
+  - [x] make coin stay a few seconds after landing then disappear
+  - [x] Make coin emit a circle of light
 - [] Add animation for throwing
-  - [] create curve for object
+  - [] create curve for thrown coin
   - [] create shadow
 - [] Create throwing bar
   - [] Bar charges when holding down throw key, then throws when released
   - [] Control throwing force according to bar
 
+## Improving light circles
 
+- [] Create base class for light circles. Make player and projectile use this class
+- [] Add a clearer border to the rings of light around the player and thrown items
+- [] Add ripples going outwards from sources of light
+- [] Add hit detection to edges of light circles
 
 # Nice to have
 
-
+- [] move movement logic in movementcontroller to fixedupdate, while animation logic stays in update. 
+This makes the move speed independent of frame rate
+- 
 
 # Bugs
 

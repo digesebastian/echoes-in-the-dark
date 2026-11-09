@@ -34,9 +34,9 @@ namespace GridBasedMovement
         [SerializeField] private float walkingNoiseDelta = 0.1f;
         [SerializeField] private float sprintingNoiseDelta = 0.2f;
         [SerializeField] private float sneakingNoiseDelta = 0.04f;
+        [SerializeField] private Light2D spotlight;
 
         private Animator _animator;
-        private Light2D _spotlight;
 
         private static readonly int HorizontalMovement = Animator.StringToHash("HorizontalMovement");
         private static readonly int VerticalMovement = Animator.StringToHash("VerticalMovement");
@@ -54,7 +54,6 @@ namespace GridBasedMovement
             rb = GetComponent<Rigidbody2D>();
             
             _animator = GetComponent<Animator>();
-            _spotlight =  GetComponentInChildren<Light2D>();
             _noiseEmitted = noiseMin;
 
             _playerState = GetComponent<PlayerState>();
@@ -136,7 +135,7 @@ namespace GridBasedMovement
 
         private void UpdateSpotlight()
         {
-            _spotlight.pointLightOuterRadius = _noiseEmitted;
+            spotlight.pointLightOuterRadius = _noiseEmitted;
         }
 
         private SpeedState GetSpeedState(bool isMoving, bool isSprinting, bool isSneaking)
