@@ -12,10 +12,8 @@
 - [x] Create throwing bar
   - [x] Bar charges when holding down throw key, then throws when released
   - [x] Control throwing force according to bar
-- [] Add collision for coin
-- [] Add animation for throwing
-  - [] create curve for thrown coin
-  - [] create shadow
+- [x] Add collision for coin
+- [] create curve for thrown coin
 
 ## Improving light circles
 

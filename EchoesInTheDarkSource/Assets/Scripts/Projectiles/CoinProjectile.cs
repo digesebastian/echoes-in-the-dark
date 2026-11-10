@@ -1,3 +1,4 @@
+using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
@@ -23,11 +24,16 @@ namespace Projectiles
         // ReSharper disable Unity.PerformanceAnalysis
         public override void Throw(Vector2 target, float velocity)
         {
+            base.Throw(target, velocity);
+            
             _target = target;
             _velocity = velocity;
             _isThrown = true;
             _decayTimeLeft = decayTimeTotal;
             spotlight.pointLightOuterRadius = spotlightMinRadius;
+            
+            Vector3 moveDirection = (_target - rb.position).normalized;
+            rb.linearVelocity = moveDirection * _velocity;
         }
         
         // Update is called once per frame
@@ -40,14 +46,11 @@ namespace Projectiles
                 Decay();
                 return;
             }
-            
-            Vector3 moveDirection = (_target - (Vector2)transform.position).normalized;
-            
-            transform.position += _velocity * Time.deltaTime * moveDirection;
 
-            if (Vector3.Distance(transform.position, _target) < 0.1f)
+            if (Vector3.Distance(rb.position, _target) < 0.1f)
             {
-                transform.position =  _target;
+                rb.position = _target;
+                rb.linearVelocity = Vector2.zero;
                 Hit();
             }
         }
@@ -80,6 +83,15 @@ namespace Projectiles
         {
             _hasHit = true;
             Decay();
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.CompareTag("Wall"))
+            {
+                rb.linearVelocity = Vector2.zero;
+                Hit();
+            }
         }
     }
 }

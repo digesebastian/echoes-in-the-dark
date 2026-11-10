@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3724279906858336079}
   - component: {fileID: 4052543637876981453}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Chargebar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +107,7 @@ GameObject:
   - component: {fileID: 4192621817121935373}
   - component: {fileID: 7509411828303563038}
   - component: {fileID: 3580464513175300290}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -299,7 +299,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Thrower
   projectilePrefab: {fileID: 3692471492693045032, guid: 4ab3d03e17992154781f0f85518c1f03, type: 3}
-  throwForce: 5
+  throwForceMax: 10
   chargeBar: {fileID: 3276962798955013394}
   chargeBarSprites:
   - {fileID: 6244038568430289735, guid: edc60c710d58bfc4dad4a0dc50a29e75, type: 3}
@@ -313,6 +313,8 @@ MonoBehaviour:
   - {fileID: -5874693532834850955, guid: edc60c710d58bfc4dad4a0dc50a29e75, type: 3}
   - {fileID: -1705328764115090248, guid: edc60c710d58bfc4dad4a0dc50a29e75, type: 3}
   - {fileID: 5223151454623392128, guid: edc60c710d58bfc4dad4a0dc50a29e75, type: 3}
+  maxChargeTime: 1
+  pauseTimeAtMaxCharge: 0.3
 --- !u!50 &4192621817121935373
 Rigidbody2D:
   serializedVersion: 5
@@ -408,7 +410,7 @@ GameObject:
   m_Component:
   - component: {fileID: 416932359220262662}
   - component: {fileID: 1108455950996815331}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Spot Light 2D
   m_TagString: Untagged
   m_Icon: {fileID: 0}
