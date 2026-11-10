@@ -12,19 +12,38 @@ You play as a blind thief who carries out heists in places like art galleries an
 
 - **The Escape:** Exits can be simple open doors or locked ones. For locked doors, you might need a code (found on paper or overheard) or you might just have to time your escape when guards open the door for a few seconds.
 
-- **Distractions:** You can throw items to make noise where they land. This reveals a new area for a short time but attracts nearby guards to that spot. 
+- **Distractions & Throwing Mechanism**:
+  You can throw items to make noise where they land. This reveals a new area for a short time but attracts nearby guards to that spot. 
   The player controls how far they throw by holding down a key (with a visible charge bar).
-  Stretch Goal: give the player multiple items to be thrown that make different amounts of noise and make sound in different moments (e.g. as they fly through the air or only when they hit the ground).	
 
-- **Enemies:** Guards patrol the maze on set paths. If they enter your vision circle, they'll chase you. If they're outside your circle, you can track them by hearing footsteps or jingling keys. Outside of your circle they're visually represented as footsteps.
+	- **Limited Supply:** You only have a limited number of items to throw per level, so you have to use them strategically.
+    
+	- **Coins:** These make a sound exactly where they land. The noise briefly reveals that area to you and attracts the nearest guards to investigate the spot.
+    
+	- **Rocks:** Rocks have a different physics mechanic and can bounce a maximum of 2 times.
+    
+	    - **Sound Waves:** Every time the rock bounces or lands, it creates a sound circle. If a guard is inside this circle, they get alerted and their own detection circle gets bigger.
+        
+	    - **Knockouts:** If you manage to hit a guard directly with the rock, it knocks them out (KO) for a specific amount of time.
 
-- **Pre-planning:** Before a level starts, an "informer" gives you a sketched map showing the loot, guards, and exit so you have a rough idea of where to go.
+- **Enemies & Detection**
+
+	- **The Dark Advantage:** You start every level by cutting the power, blinding the guards and turning the heist into a timed puzzle. You have to grab the loot before the lights come back on. If the lights turn on, you lose the level.
+    
+	- **Tracking Guards:** Guards patrol the maze on set paths. When they are nearby but outside your direct vision, you can track them by hearing their footsteps, which also show up visually on your screen (both the footsteps and the circle around them).
+    
+	- **Detection Circles:** Every guard has a detection circle around them. If a guard's circle collides with your vision circle, they will spot you and chase you.
+    
+	- **Game Over:** If a guard touches you, you're caught and the run is dead.
+    
+	- **Alarms:** When you steal the loot, an alarm goes off, the guards move faster and their detection circles get much bigger, making them significantly harder to avoid.
+	  
+- **Pre-planning:** no animation, arrow pointing towards the goal (treasure, then escape door)
+  
 
 # Characters
 
 - **The Blind Thief:** The player character.
-
-- **The Informer:** The person scouting the area and giving you an idea of the place beforehand.
    
 - **The Guards:** The main obstacles patrolling the area.
 
@@ -56,7 +75,7 @@ Open questions and ideas:
 
 - **Core Base:** First step is just getting the character into a single room with the camera following them.
 
-- **Prototype Scope:** The first prototype will feature exactly 1 level, 1 thing to steal, an unlocked exit door, the blindness and throwing mechanics, guards, basic sounds (footsteps and a thrown coin), character controllers/location, and the pre-level sketch map.
+- **Prototype Scope:** The first prototype will feature exactly 1 level, 1 thing to steal, an unlocked exit door, the blindness and throwing mechanics, guards, basic sounds (footsteps and a thrown coin), character controllers/location.
 
 ---
 # Tasks
@@ -67,3 +86,47 @@ Open questions and ideas:
 - Format the Game Design Document (GDD) - Francesco
 - Set up the GitHub repository - Sebastien
 - Draw/create the characters' sprites - Karen
+
+---
+
+# Changelog
+
+- 20/10: first version of the GDD
+- 27/10: 
+	- removed pre-planning animation
+	- improved guards' behaviour
+	- improved throwing mechanism
+
+---
+
+# 27/10 meeting notes
+
+- corners, narrow places
+- strange architecture
+- multiple paths (2-3) to the treasure
+
+controller:
+- w: walking - circle of a fixed size
+- shift + w: running - circle gets bigger and bigger, you accelerate
+- space + w: stealth mode - going at a fixed slow speed, circle is small
+
+## Task for 3 november
+
+- maze + treasure and escape door - Karen
+- blindness mechanism (circle around the player) + fixed camera, player controller with fast and slow - Sherif and Sebastien 
+- guards behavior (tree) - Francesco and Wojtek
+
+---
+# 3/11 meeting notes
+
+- floors with different materials that emit different sounds
+- achievements/stars for how well you completed the level
+
+## Task for 10 november
+
+- couple of rooms, hallway - Karen
+- guards, attention point mechanism (with priorities), circle around them + chasing mechanic - Francesco and Wojtek
+- throwing mechanism - Sebastien
+- sounds - Sherif
+
+---

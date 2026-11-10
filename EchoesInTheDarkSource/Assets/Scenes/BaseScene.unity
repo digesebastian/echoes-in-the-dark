@@ -2725,7 +2725,7 @@ Transform:
   m_GameObject: {fileID: 1193073468}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: -5.5, y: 0.6, z: 0}
   m_LocalScale: {x: 960, y: 640, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2908,7 +2908,9 @@ GameObject:
   - component: {fileID: 1654380132}
   - component: {fileID: 1654380131}
   - component: {fileID: 1654380134}
+  - component: {fileID: 1654380136}
   - component: {fileID: 1654380135}
+  - component: {fileID: 1654380137}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -3025,14 +3027,141 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ea13ebd0d0d10445686fdd7230df2cf3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GridBasedMovement.MovementController
-  moveDiagonally: 1
+  moveAction:
+    m_Name: Move
+    m_Type: 0
+    m_ExpectedControlType: 
+    m_Id: 4371cd9a-078b-48fb-b911-9bb127878c93
+    m_Processors: 
+    m_Interactions: 
+    m_SingletonActionBindings:
+    - m_Name: 2D Vector
+      m_Id: da2888b0-01f0-4c1b-99e0-7e7cc6353f36
+      m_Path: 2DVector
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Move
+      m_Flags: 4
+    - m_Name: up
+      m_Id: 38d8578a-8487-4a10-a730-9cbab8e4ab41
+      m_Path: <Keyboard>/w
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Move
+      m_Flags: 8
+    - m_Name: down
+      m_Id: 9093186a-d256-4f40-a784-bc9355a335a8
+      m_Path: <Keyboard>/s
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Move
+      m_Flags: 8
+    - m_Name: left
+      m_Id: ae1bd76d-e407-4021-8e38-1be90e1f4554
+      m_Path: <Keyboard>/a
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Move
+      m_Flags: 8
+    - m_Name: right
+      m_Id: f33ff330-f99a-4f81-a82d-fc36f3003bf3
+      m_Path: <Keyboard>/d
+      m_Interactions: 
+      m_Processors: 
+      m_Groups: 
+      m_Action: Move
+      m_Flags: 8
+    m_Flags: 0
+    m_Priority: 0
   sneakSpeed: 1
   walkSpeed: 5
   sprintSpeed: 8
-  obstacle:
+  noiseMin: 1
+  walkingNoiseMax: 8
+  sprintingNoiseMax: 15
+  sneakingNoiseMax: 5
+  noiseDecayRate: 0.08
+  walkingNoiseDelta: 0.08
+  sprintingNoiseDelta: 0.15
+  sneakingNoiseDelta: 0.04
+--- !u!61 &1654380135
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1654380130}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 8
---- !u!114 &1654380135
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: -0.057255983, y: 0.011451066}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2, y: 2}
+    newSize: {x: 2, y: 2}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Size: {x: 1.1068058, y: 1.4732438}
+  m_EdgeRadius: 0
+--- !u!50 &1654380136
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1654380130}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!114 &1654380137
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
