@@ -8,6 +8,7 @@ namespace Projectiles
     {
         [SerializeField] private float decayTimeTotal = 2.0f;
         [SerializeField] private Light2D spotlight;
+        [SerializeField] private float spotlightMinRadius = 0.1f;
         [SerializeField] private float spotlightMaxRadius = 5f;
         [SerializeField] private float spotLightRadiusDelta = 0.02f;
         
@@ -18,6 +19,16 @@ namespace Projectiles
         private bool _isThrown = false;
 
         private float _decayTimeLeft;
+        
+        // ReSharper disable Unity.PerformanceAnalysis
+        public override void Throw(Vector2 target, float velocity)
+        {
+            _target = target;
+            _velocity = velocity;
+            _isThrown = true;
+            _decayTimeLeft = decayTimeTotal;
+            spotlight.pointLightOuterRadius = spotlightMinRadius;
+        }
         
         // Update is called once per frame
         private void FixedUpdate()
@@ -65,19 +76,9 @@ namespace Projectiles
             }
         }
 
-        // ReSharper disable Unity.PerformanceAnalysis
-        public override void Throw(Vector2 target, float velocity)
-        {
-            _target = target;
-            _velocity = velocity;
-            _isThrown = true;
-            _decayTimeLeft = decayTimeTotal;
-        }
-
         public override void Hit()
         {
             _hasHit = true;
-            spotlight.gameObject.SetActive(true);
             Decay();
         }
     }

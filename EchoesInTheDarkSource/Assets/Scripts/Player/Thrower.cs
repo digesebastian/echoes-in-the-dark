@@ -1,3 +1,4 @@
+using System;
 using Projectiles;
 using UnityEditor.ShaderGraph.Internal;
 using UnityEngine;
@@ -12,11 +13,13 @@ namespace Player
         [SerializeField] private GameObject chargeBar;
         [SerializeField] private Sprite[] chargeBarSprites;
         [SerializeField] private float maxChargeTime = 1f;
+        [SerializeField] private float pauseTimeAtMaxCharge = 0.3f;
 
         private SpriteRenderer _chargeBarRenderer;
         private PlayerState _playerState;
         private float _throwForce = 0;
         private float _throwKeyHeldTime = 0;
+        
 
         private void Awake()
         {
@@ -36,14 +39,17 @@ namespace Player
 
             if (Keyboard.current.enterKey.isPressed)
             {
-                // cycle charge bar state
-                float currentCharge = Mathf.PingPong(_throwKeyHeldTime, maxChargeTime);
+                // Cycle charge bar state
+                float maxChargeWithPause = maxChargeTime + (pauseTimeAtMaxCharge / 2);
+                float currentCharge = Mathf.PingPong(_throwKeyHeldTime, maxChargeWithPause);
+                currentCharge = Math.Min(currentCharge, maxChargeTime);
                 float chargePercent = currentCharge / maxChargeTime;
                 _throwForce = chargePercent;
+                
+                // Update charge bar sprite
                 int frameIndex = Mathf.RoundToInt(chargePercent * (chargeBarSprites.Length - 1));
                 _chargeBarRenderer.sprite = chargeBarSprites[frameIndex];
                 
-                // Update charge bar sprite
                 _throwKeyHeldTime += Time.deltaTime;
             }
 

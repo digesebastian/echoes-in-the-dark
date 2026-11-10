@@ -2641,7 +2641,7 @@ Transform:
   m_GameObject: {fileID: 1193073468}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -5.5, y: 0.6, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 960, y: 640, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2858,7 +2858,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 271773968144178313, guid: 904742295e8bd7c419551f6281a34b53, type: 3}
       propertyPath: maxChargeTime
-      value: 0.8
+      value: 0.7
       objectReference: {fileID: 0}
     - target: {fileID: 1108455950996815331, guid: 904742295e8bd7c419551f6281a34b53, type: 3}
       propertyPath: m_Intensity
