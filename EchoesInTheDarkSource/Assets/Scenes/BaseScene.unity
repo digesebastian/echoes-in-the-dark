@@ -141,7 +141,7 @@ MonoBehaviour:
   IgnoreTimeScale: 0
   WorldUpOverride: {fileID: 0}
   ChannelMask: -1
-  UpdateMethod: 1
+  UpdateMethod: 2
   BlendUpdateMethod: 1
   LensModeOverride:
     Enabled: 0
@@ -2920,6 +2920,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7509411828303563038, guid: 904742295e8bd7c419551f6281a34b53, type: 3}
+      propertyPath: m_Size.x
+      value: 0.855042
+      objectReference: {fileID: 0}
+    - target: {fileID: 7509411828303563038, guid: 904742295e8bd7c419551f6281a34b53, type: 3}
+      propertyPath: m_Size.y
+      value: 0.98959213
+      objectReference: {fileID: 0}
+    - target: {fileID: 7509411828303563038, guid: 904742295e8bd7c419551f6281a34b53, type: 3}
+      propertyPath: m_Offset.x
+      value: -0.09700823
+      objectReference: {fileID: 0}
+    - target: {fileID: 7509411828303563038, guid: 904742295e8bd7c419551f6281a34b53, type: 3}
+      propertyPath: m_Offset.y
+      value: -0.11111805
+      objectReference: {fileID: 0}
     - target: {fileID: 7533385971903319126, guid: 904742295e8bd7c419551f6281a34b53, type: 3}
       propertyPath: m_Name
       value: Player
@@ -3038,9 +3054,9 @@ SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
   - {fileID: 4784997314503853010}
+  - {fileID: 1547329521}
   - {fileID: 619394802}
   - {fileID: 2473929644559184482}
   - {fileID: 1572457527}
-  - {fileID: 1547329521}
   - {fileID: 1193073470}
   - {fileID: 1805606734}
