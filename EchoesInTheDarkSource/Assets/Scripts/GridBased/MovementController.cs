@@ -59,7 +59,6 @@ namespace GridBasedMovement
             _noiseEmitted = noiseMin;
             moveAction.Enable();
             _playerCollider = GetComponentInChildren<CircleCollider2D>();
-            print(obstacle.value);
         }
 
         private void Update()
