@@ -87,6 +87,27 @@ Open questions and ideas:
 - Set up the GitHub repository - Sebastien
 - Draw/create the characters' sprites - Karen
 
+### Deadline: 3 november
+
+- maze + treasure and escape door - Karen
+- blindness mechanism (circle around the player) + fixed camera, player controller with fast and slow - Sherif and Sebastien 
+- guards behavior (tree) - Francesco and Wojtek
+
+### Deadline: 10 november
+
+- couple of rooms, hallway - Karen
+- guards, attention point mechanism (with priorities), circle around them + chasing mechanic - Francesco and Wojtek
+- throwing mechanism - Sebastien
+- sounds - Sherif
+
+### Deadline: 17 November
+
+- sounds (footsteps, throwing sound) - Sherif 
+- fix the guard movement, guard root, pathfinding - Wojtek
+- add the map, footstep animation - Karen
+- outline the thrown coin, collision and bouncing, "throwing power" mechanism - Sebastien
+- guards react to the throwing, merge guards and throwing - Francesco
+
 ---
 
 # Changelog
@@ -110,23 +131,8 @@ controller:
 - shift + w: running - circle gets bigger and bigger, you accelerate
 - space + w: stealth mode - going at a fixed slow speed, circle is small
 
-## Task for 3 november
-
-- maze + treasure and escape door - Karen
-- blindness mechanism (circle around the player) + fixed camera, player controller with fast and slow - Sherif and Sebastien 
-- guards behavior (tree) - Francesco and Wojtek
-
 ---
 # 3/11 meeting notes
 
 - floors with different materials that emit different sounds
 - achievements/stars for how well you completed the level
-
-## Task for 10 november
-
-- couple of rooms, hallway - Karen
-- guards, attention point mechanism (with priorities), circle around them + chasing mechanic - Francesco and Wojtek
-- throwing mechanism - Sebastien
-- sounds - Sherif
-
----
