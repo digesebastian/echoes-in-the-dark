@@ -24,9 +24,9 @@ namespace GridBasedMovement
         [SerializeField] private float sprintSpeed = 8f;
         
         [SerializeField] private float noiseMin = 1f;
-        [SerializeField] private float walkingNoiseMax = 10f;
-        [SerializeField] private float sprintingNoiseMax = 15f;
-        [SerializeField] private float sneakingNoiseMax = 5f;
+        [SerializeField] private float walkingNoiseMax = 5f; // 10
+        [SerializeField] private float sprintingNoiseMax = 10f; // 15
+        [SerializeField] private float sneakingNoiseMax = 2f; // 5
         
         [SerializeField] private float noiseDecayRate = 0.1f;
         [SerializeField] private float walkingNoiseDelta = 0.1f;
@@ -35,6 +35,8 @@ namespace GridBasedMovement
 
         private Animator _animator;
         private Light2D _spotlight;
+        private CircleCollider2D _playerCollider;
+        [SerializeField] private float shadowFade = 1.0f;
 
         private static readonly int HorizontalMovement = Animator.StringToHash("HorizontalMovement");
         private static readonly int VerticalMovement = Animator.StringToHash("VerticalMovement");
@@ -55,8 +57,9 @@ namespace GridBasedMovement
             _animator = GetComponent<Animator>();
             _spotlight =  GetComponentInChildren<Light2D>();
             _noiseEmitted = noiseMin;
-            
             moveAction.Enable();
+            _playerCollider = GetComponentInChildren<CircleCollider2D>();
+            print(obstacle.value);
         }
 
         private void Update()
@@ -134,6 +137,11 @@ namespace GridBasedMovement
         private void UpdateSpotlight()
         {
             _spotlight.pointLightOuterRadius = _noiseEmitted;
+
+            if (_playerCollider != null)
+            {
+                _playerCollider.radius = _spotlight.pointLightOuterRadius - shadowFade;
+            }
         }
 
         private SpeedState GetSpeedState(bool isMoving, bool isSprinting, bool isSneaking)
