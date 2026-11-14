@@ -35,9 +35,9 @@ namespace GridBasedMovement
         [SerializeField] private float sprintingNoiseDelta = 0.2f;
         [SerializeField] private float sneakingNoiseDelta = 0.04f;
         [SerializeField] private Light2D spotlight;
+        private CircleCollider2D _spotlightCollider;
         
         private Animator _animator;
-        private CircleCollider2D _playerCollider;
         [SerializeField] private float shadowFade = 1.0f;
 
         private static readonly int HorizontalMovement = Animator.StringToHash("HorizontalMovement");
@@ -61,7 +61,7 @@ namespace GridBasedMovement
             _playerState = GetComponent<PlayerState>();
             
             moveAction.Enable();
-            _playerCollider = GetComponentInChildren<CircleCollider2D>();
+            _spotlightCollider = spotlight.GetComponentInChildren<CircleCollider2D>();
         }
 
         private void Update()
@@ -140,9 +140,9 @@ namespace GridBasedMovement
         {
             spotlight.pointLightOuterRadius = _noiseEmitted;
 
-            if (_playerCollider != null)
+            if (_spotlightCollider)
             {
-                _playerCollider.radius = spotlight.pointLightOuterRadius - shadowFade;
+                _spotlightCollider.radius = spotlight.pointLightOuterRadius - shadowFade;
             }
         }
 
