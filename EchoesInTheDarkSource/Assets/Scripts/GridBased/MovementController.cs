@@ -1,4 +1,4 @@
-﻿using System;
+﻿using Player;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using UnityEngine.InputSystem;
@@ -16,6 +16,8 @@ namespace GridBasedMovement
         }
 
         Rigidbody2D rb;
+
+        private PlayerState _playerState;
         
         public InputAction moveAction;
         
@@ -32,10 +34,10 @@ namespace GridBasedMovement
         [SerializeField] private float walkingNoiseDelta = 0.1f;
         [SerializeField] private float sprintingNoiseDelta = 0.2f;
         [SerializeField] private float sneakingNoiseDelta = 0.04f;
-
+        [SerializeField] private Light2D spotlight;
+        private CircleCollider2D _spotlightCollider;
+        
         private Animator _animator;
-        private Light2D _spotlight;
-        private CircleCollider2D _playerCollider;
         [SerializeField] private float shadowFade = 1.0f;
 
         private static readonly int HorizontalMovement = Animator.StringToHash("HorizontalMovement");
@@ -48,17 +50,18 @@ namespace GridBasedMovement
         private float _horizontalMovement;
         private float _verticalMovement;
         private float _noiseEmitted;
-        private Vector2 _previousMovement;
 
         private void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
             
             _animator = GetComponent<Animator>();
-            _spotlight =  GetComponentInChildren<Light2D>();
             _noiseEmitted = noiseMin;
+
+            _playerState = GetComponent<PlayerState>();
+            
             moveAction.Enable();
-            _playerCollider = GetComponentInChildren<CircleCollider2D>();
+            _spotlightCollider = spotlight.GetComponentInChildren<CircleCollider2D>();
         }
 
         private void Update()
@@ -90,12 +93,12 @@ namespace GridBasedMovement
                 _animator.SetFloat(HorizontalMovement, direction.x);
                 _animator.SetFloat(VerticalMovement, direction.y);
                 
-                _previousMovement = direction;
+                _playerState.SetFacingDirection(direction);
             }
             else
             {
-                _animator.SetFloat(PreviousHorizontalMovement, _previousMovement.x);
-                _animator.SetFloat(PreviousVerticalMovement, _previousMovement.y);
+                _animator.SetFloat(PreviousHorizontalMovement, _playerState.GetFacingDirection().x);
+                _animator.SetFloat(PreviousVerticalMovement, _playerState.GetFacingDirection().y);
             }
         }
 
@@ -135,11 +138,11 @@ namespace GridBasedMovement
 
         private void UpdateSpotlight()
         {
-            _spotlight.pointLightOuterRadius = _noiseEmitted;
+            spotlight.pointLightOuterRadius = _noiseEmitted;
 
-            if (_playerCollider != null)
+            if (_spotlightCollider)
             {
-                _playerCollider.radius = _spotlight.pointLightOuterRadius - shadowFade;
+                _spotlightCollider.radius = spotlight.pointLightOuterRadius - shadowFade;
             }
         }
 
