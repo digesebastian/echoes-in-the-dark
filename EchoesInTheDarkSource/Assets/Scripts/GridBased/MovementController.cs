@@ -63,7 +63,7 @@ namespace GridBasedMovement
 
         private void Update()
         {
-            Vector2 movementInput = moveAction.ReadValue<Vector2>();
+            Vector2 movementInput = moveAction.ReadValue<Vector2>();    
             bool isMoving =  movementInput != Vector2.zero;
             bool isSprintingInput = Keyboard.current.shiftKey.isPressed;
             bool isSneakingInput = !isSprintingInput && Keyboard.current.spaceKey.isPressed;
