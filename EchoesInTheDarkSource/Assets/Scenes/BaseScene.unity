@@ -2964,6 +2964,11 @@ Transform:
   - {fileID: 1460898592}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1165779204 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7533385971903319126, guid: 904742295e8bd7c419551f6281a34b53, type: 3}
+  m_PrefabInstance: {fileID: 2473929644559184482}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1193073468
 GameObject:
   m_ObjectHideFlags: 0
@@ -3049,7 +3054,7 @@ Transform:
   m_GameObject: {fileID: 1193073468}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0.06890869, y: -0.20671368, z: 0}
   m_LocalScale: {x: 960, y: 640, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3389,7 +3394,7 @@ MonoBehaviour:
           m_Value0: 17391472166230801397
           m_Value1: 8871348875618418941
         Name: Player
-        m_Value: {fileID: 0}
+        m_Value: {fileID: 1165779204}
     - rid: 2041023724924174336
       type: {class: 'BlackboardVariable`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]], mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:

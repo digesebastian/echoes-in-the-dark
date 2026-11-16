@@ -131,7 +131,7 @@ MonoBehaviour:
   - rid: 1919014128431399448
   - rid: 1919014128431399502
   - rid: 1919014128431399559
-  m_VersionTimestamp: 639297748235867165
+  m_VersionTimestamp: 639303623133118021
   m_SerializedVersion: 3
   m_DebugInfo: {fileID: -3823141564098093126}
   m_RuntimeGraph: {fileID: 7459875736728231230}
@@ -1229,7 +1229,7 @@ MonoBehaviour:
     - rid: 2041023632907436356
       type: {class: ActionNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
-        Position: {x: -260.3027, y: 652.4457}
+        Position: {x: -258.7734, y: 652.4457}
         ID:
           m_Value0: 4179612638716777342
           m_Value1: 2847279802302171478
@@ -1418,7 +1418,7 @@ MonoBehaviour:
     - rid: 2041023632907436758
       type: {class: ActionNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
-        Position: {x: -259.0811, y: 467.35275}
+        Position: {x: -263.669, y: 465.8235}
         ID:
           m_Value0: 16291056784634356505
           m_Value1: 1051286877839731447
@@ -1693,7 +1693,7 @@ MonoBehaviour:
   - rid: 2041023611063501367
   - rid: 2041023632907436101
   - rid: 1919014128431399052
-  m_VersionTimestamp: 639297719973576536
+  m_VersionTimestamp: 639304425248433424
   m_CommandBuffer:
     m_Commands: []
   m_RuntimeBlackboardAsset: {fileID: -6367369350085393507}
@@ -2280,7 +2280,7 @@ MonoBehaviour:
         BlackboardGroupReferences: []
         Root:
           rid: 1919014128431399727
-        m_VersionTimestamp: 639297748235867165
+        m_VersionTimestamp: 639303623133118021
     - rid: 2041023558857261249
       type: {class: BlackboardReference, ns: Unity.Behavior, asm: Unity.Behavior}
       data:

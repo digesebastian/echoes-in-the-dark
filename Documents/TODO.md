@@ -19,15 +19,13 @@
 
 - [] Create base class for light circles. Make player and projectile use this class
 - [] Add a clearer border to the rings of light around the player and thrown items
-- [] Add ripples going outwards from sources of light
+- [] Add ripples going outwards from sources of light 
 - [] Add hit detection to edges of light circles
 
 # Nice to have
 
-- [] move movement logic in movementcontroller to fixedupdate, while animation logic stays in update. 
-This makes the move speed independent of frame rate
-- 
 
 # Bugs
 
 - [] Sprinting animation plays all frames even when taking a small step
+- [] Guards sometimes pick points that are not in their list of points
