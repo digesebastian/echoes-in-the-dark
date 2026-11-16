@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 4052543637876981453}
   m_Layer: 6
   m_Name: Chargebar
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -109,7 +109,7 @@ GameObject:
   - component: {fileID: 3580464513175300290}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -277,7 +277,7 @@ MonoBehaviour:
   sneakSpeed: 1
   walkSpeed: 5
   sprintSpeed: 8
-  noiseMin: 1
+  noiseMin: 2
   walkingNoiseMax: 8
   sprintingNoiseMax: 15
   sneakingNoiseMax: 5
@@ -314,7 +314,7 @@ MonoBehaviour:
   - {fileID: -5874693532834850955, guid: edc60c710d58bfc4dad4a0dc50a29e75, type: 3}
   - {fileID: -1705328764115090248, guid: edc60c710d58bfc4dad4a0dc50a29e75, type: 3}
   - {fileID: 5223151454623392128, guid: edc60c710d58bfc4dad4a0dc50a29e75, type: 3}
-  maxChargeTime: 1
+  maxChargeTime: 0.7
   pauseTimeAtMaxCharge: 0.3
 --- !u!50 &4192621817121935373
 Rigidbody2D:
@@ -377,7 +377,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.057255983, y: 0.011451066}
+  m_Offset: {x: -0.1, y: 0.01}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -387,7 +387,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.1068058, y: 1.4732438}
+  m_Size: {x: 0.79, y: 1.11}
   m_EdgeRadius: 0
 --- !u!114 &3580464513175300290
 MonoBehaviour:
@@ -411,9 +411,10 @@ GameObject:
   m_Component:
   - component: {fileID: 416932359220262662}
   - component: {fileID: 1108455950996815331}
+  - component: {fileID: 1102006551792864118}
   m_Layer: 6
   m_Name: Spot Light 2D
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -462,7 +463,7 @@ MonoBehaviour:
   m_NormalMapDistance: 3
   m_NormalMapQuality: 2
   m_UseNormalMap: 0
-  m_ShadowsEnabled: 1
+  m_ShadowsEnabled: 0
   m_ShadowIntensity: 0.75
   m_ShadowSoftness: 0.3
   m_ShadowSoftnessFalloffIntensity: 0.5
@@ -485,3 +486,39 @@ MonoBehaviour:
   - {x: 0.5, y: -0.5, z: 0}
   - {x: 0.5, y: 0.5, z: 0}
   - {x: -0.5, y: 0.5, z: 0}
+--- !u!58 &1102006551792864118
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8110468027656843973}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 5
