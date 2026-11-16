@@ -1,7 +1,5 @@
-using System.Collections.Generic;
-using Unity.Behavior;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
+using UnityEngine.Rendering.Universal; 
 
 namespace Projectiles
 {
@@ -14,14 +12,13 @@ namespace Projectiles
         [SerializeField] private float spotLightRadiusDelta = 0.02f;
 
         private CircleCollider2D _noiseCollider;
-        private readonly HashSet<BehaviorGraphAgent> _alertedGuards = new();
-
         private Vector2 _target;
         private float _velocity;
-
         private bool _hasHit;
         private bool _isThrown;
         private float _decayTimeLeft;
+
+        public bool HasLanded => _hasHit;
         
         private void Awake()
         {
@@ -42,11 +39,10 @@ namespace Projectiles
             _velocity = velocity;
             _isThrown = true;
             _hasHit = false;
-            _alertedGuards.Clear();
             _decayTimeLeft = decayTimeTotal;
 
             spotlight.pointLightOuterRadius = spotlightMinRadius;
-            if (_noiseCollider != null)
+            if (_noiseCollider)
             {
                 _noiseCollider.radius = spotlightMinRadius;
                 _noiseCollider.enabled = false;
@@ -91,7 +87,7 @@ namespace Projectiles
                 }
             }
 
-            if (_noiseCollider != null)
+            if (_noiseCollider)
             {
                 _noiseCollider.radius = Mathf.Max(0f, spotlight.pointLightOuterRadius);
             }
@@ -109,7 +105,7 @@ namespace Projectiles
             if (_hasHit) return;
 
             _hasHit = true;
-            if (_noiseCollider != null)
+            if (_noiseCollider)
             {
                 _noiseCollider.enabled = true;
             }
@@ -123,37 +119,6 @@ namespace Projectiles
             {
                 rb.linearVelocity = Vector2.zero;
                 Hit();
-                return;
-            }
-
-            TryAttractGuard(other);
-        }
-
-        private void OnTriggerStay2D(Collider2D other)
-        {
-            TryAttractGuard(other);
-        }
-
-        private void TryAttractGuard(Collider2D other)
-        {
-            if (!_hasHit) return;
-            
-            if (other is not CircleCollider2D) return;
-
-            BehaviorGraphAgent guardAgent = other.GetComponentInParent<BehaviorGraphAgent>();
-            if (guardAgent == null || !_alertedGuards.Add(guardAgent)) return;
-            
-            // Ignore coins if the guard is already chasing the Player
-            if (guardAgent.BlackboardReference.GetVariableValue("IsPlayerInRadius", out bool isPlayerInRadius) && isPlayerInRadius)
-                return;
-
-            if (guardAgent.BlackboardReference.GetVariableValue("coin_points", out List<GameObject> coinPoints))
-            {
-                GameObject coinPoint = new GameObject("CoinPoint");
-                coinPoint.transform.position = transform.position;
-
-                coinPoints.Add(coinPoint);
-                guardAgent.BlackboardReference.SetVariableValue("coin_points", coinPoints);
             }
         }
     }
