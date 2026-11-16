@@ -4375,47 +4375,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 67e91700397f56e4e88c424d38958b5a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AttentionNode
---- !u!1 &2020854906 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8110468027656843973, guid: 904742295e8bd7c419551f6281a34b53, type: 3}
-  m_PrefabInstance: {fileID: 2473929644559184482}
-  m_PrefabAsset: {fileID: 0}
---- !u!58 &2020854909
-CircleCollider2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2020854906}
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_ForceSendLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ForceReceiveLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_ContactCaptureLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_CallbackLayers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_CompositeOperation: 0
-  m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_Radius: 5
 --- !u!1001 &2033428277
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4690,10 +4649,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 8110468027656843973, guid: 904742295e8bd7c419551f6281a34b53, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 2020854909}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 904742295e8bd7c419551f6281a34b53, type: 3}
 --- !u!1001 &4784997314503853010
 PrefabInstance:

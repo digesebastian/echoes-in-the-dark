@@ -51,8 +51,6 @@ namespace Player
         private float _verticalMovement;
         private float _noiseEmitted;
 
-        private bool _hasClaimedTreasure = false;
-
         private void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
@@ -88,7 +86,7 @@ namespace Player
         {
             if (other.CompareTag("Treasure"))
             {
-                _hasClaimedTreasure = true;
+                _playerState.SetHasClaimedTreasure(true);
                 Destroy(other.gameObject);
             }
         }
