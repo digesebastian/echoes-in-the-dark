@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PlayerSpotlight
   - Wall
+  - Treasure
   layers:
   - Default
   - TransparentFX

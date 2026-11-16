@@ -1,9 +1,9 @@
-﻿using Player;
+﻿using System;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
 
-namespace GridBasedMovement
+namespace Player
 {
     public class MovementController : MonoBehaviour
     {
@@ -51,6 +51,8 @@ namespace GridBasedMovement
         private float _verticalMovement;
         private float _noiseEmitted;
 
+        private bool _hasClaimedTreasure = false;
+
         private void Awake()
         {
             rb = GetComponent<Rigidbody2D>();
@@ -80,6 +82,15 @@ namespace GridBasedMovement
             float currentSpeed = GetSpeed(currentSpeedState);
                 
             rb.linearVelocity = currentSpeed * movementInput.normalized;
+        }
+
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.CompareTag("Treasure"))
+            {
+                _hasClaimedTreasure = true;
+                Destroy(other.gameObject);
+            }
         }
 
         private void UpdateAnimator(Vector2 direction, SpeedState speedState)
