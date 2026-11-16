@@ -147,13 +147,13 @@ namespace Projectiles
             if (guardAgent.BlackboardReference.GetVariableValue("IsPlayerInRadius", out bool isPlayerInRadius) && isPlayerInRadius)
                 return;
 
-            if (guardAgent.BlackboardReference.GetVariableValue("mid_points", out List<GameObject> midPoints))
+            if (guardAgent.BlackboardReference.GetVariableValue("coin_points", out List<GameObject> coinPoints))
             {
-                GameObject midPoint = new GameObject("CoinMidPoint");
-                midPoint.transform.position = transform.position;
+                GameObject coinPoint = new GameObject("CoinPoint");
+                coinPoint.transform.position = transform.position;
 
-                midPoints.Add(midPoint);
-                guardAgent.BlackboardReference.SetVariableValue("mid_points", midPoints);
+                coinPoints.Add(coinPoint);
+                guardAgent.BlackboardReference.SetVariableValue("coin_points", coinPoints);
             }
         }
     }
