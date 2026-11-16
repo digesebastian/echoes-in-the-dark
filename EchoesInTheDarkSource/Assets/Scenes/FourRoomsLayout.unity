@@ -4858,9 +4858,38 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5611053292347648286, guid: c97f82f129910a34188dcdf0d95291f7, type: 3}
+      propertyPath: 'managedReferences[2003672303747990253]'
+      value: 'Unity.Behavior Unity.Behavior.BlackboardVariable`1[[System.Single,
+        mscorlib]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5611053292347648286, guid: c97f82f129910a34188dcdf0d95291f7, type: 3}
+      propertyPath: managedReferences[2003672303747990253].Name
+      value: walkingSpeed
+      objectReference: {fileID: 0}
+    - target: {fileID: 5611053292347648286, guid: c97f82f129910a34188dcdf0d95291f7, type: 3}
+      propertyPath: m_BlackboardVariableOverridesList.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5611053292347648286, guid: c97f82f129910a34188dcdf0d95291f7, type: 3}
+      propertyPath: managedReferences[2003672303747990253].m_Value
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 5611053292347648286, guid: c97f82f129910a34188dcdf0d95291f7, type: 3}
       propertyPath: managedReferences[2041023724441042945].m_Value
       value: 
       objectReference: {fileID: 1192708148}
+    - target: {fileID: 5611053292347648286, guid: c97f82f129910a34188dcdf0d95291f7, type: 3}
+      propertyPath: 'm_BlackboardVariableOverridesList.Array.data[3]'
+      value: 2003672303747990253
+      objectReference: {fileID: 0}
+    - target: {fileID: 5611053292347648286, guid: c97f82f129910a34188dcdf0d95291f7, type: 3}
+      propertyPath: managedReferences[2003672303747990253].GUID.m_Value0
+      value: 3937029199698433059
+      objectReference: {fileID: 0}
+    - target: {fileID: 5611053292347648286, guid: c97f82f129910a34188dcdf0d95291f7, type: 3}
+      propertyPath: managedReferences[2003672303747990253].GUID.m_Value1
+      value: 4420663127860715847
+      objectReference: {fileID: 0}
     - target: {fileID: 5611053292347648286, guid: c97f82f129910a34188dcdf0d95291f7, type: 3}
       propertyPath: managedReferences[2041023724924174336].m_Value.Array.size
       value: 3

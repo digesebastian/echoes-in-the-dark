@@ -274,7 +274,7 @@ MonoBehaviour:
       m_Flags: 8
     m_Flags: 0
     m_Priority: 0
-  sneakSpeed: 1
+  sneakSpeed: 2
   walkSpeed: 5
   sprintSpeed: 8
   noiseMin: 2
