@@ -2146,6 +2146,7 @@ MonoBehaviour:
           rid: 1919014128431399091
         distanceBias: 2
         starvationWeightBonus: 0.5
+        minPickDistance: 1
     - rid: 1919014128431399745
       type: {class: SequenceComposite, ns: Unity.Behavior, asm: Unity.Behavior}
       data:
