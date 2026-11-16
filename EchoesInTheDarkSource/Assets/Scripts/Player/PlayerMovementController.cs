@@ -86,7 +86,7 @@ namespace Player
         {
             if (other.CompareTag("Treasure"))
             {
-                _playerState.SetHasClaimedTreasure(true);
+                _playerState.HasClaimedTreasure = true;
                 Destroy(other.gameObject);
             }
         }
@@ -102,12 +102,12 @@ namespace Player
                 _animator.SetFloat(HorizontalMovement, direction.x);
                 _animator.SetFloat(VerticalMovement, direction.y);
                 
-                _playerState.SetFacingDirection(direction);
+                _playerState.FacingDirection = direction;
             }
             else
             {
-                _animator.SetFloat(PreviousHorizontalMovement, _playerState.GetFacingDirection().x);
-                _animator.SetFloat(PreviousVerticalMovement, _playerState.GetFacingDirection().y);
+                _animator.SetFloat(PreviousHorizontalMovement, _playerState.FacingDirection.x);
+                _animator.SetFloat(PreviousVerticalMovement, _playerState.FacingDirection.y);
             }
         }
 
