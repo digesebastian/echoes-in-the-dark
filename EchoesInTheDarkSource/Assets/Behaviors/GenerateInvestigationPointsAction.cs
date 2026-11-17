@@ -21,8 +21,8 @@ public partial class GenerateInvestigationPointsAction : Action
         if (HighPoints.Value == null || HighPoints.Value.Count == 0 || MidPoints.Value == null) 
             return Status.Failure;
 
-        _searchRadius = 5f;
-        _pointsCount = 4;
+        _searchRadius = 9f;
+        _pointsCount = 5;
         
         Vector2 center = HighPoints.Value[0].transform.position;
 

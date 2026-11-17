@@ -24,10 +24,10 @@ public partial class MonitorPlayerCollisionAction : Action
     {
         _guardCollider = GameObject.GetComponent<Collider2D>();
 
-        if (Player.Value != null) _playerCollider = Player.Value.GetComponent<Collider2D>();
+        if (Player.Value != null) _playerCollider = Player.Value.GetComponentInChildren<CircleCollider2D>();
 
         _chaseTargetMarker = new GameObject("ChaseTargetMarker");
-        _catchRadius = 0.5f;
+        _catchRadius = 1.2f;
 
         return Status.Running;
     }

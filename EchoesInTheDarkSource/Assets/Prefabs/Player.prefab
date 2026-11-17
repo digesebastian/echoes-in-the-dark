@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 4052543637876981453}
   m_Layer: 6
   m_Name: Chargebar
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -155,7 +155,7 @@ GameObject:
   - component: {fileID: 3580464513175300290}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -324,10 +324,10 @@ MonoBehaviour:
   sneakSpeed: 1
   walkSpeed: 5
   sprintSpeed: 8
-  noiseMin: 2
-  walkingNoiseMax: 8
-  sprintingNoiseMax: 15
-  sneakingNoiseMax: 5
+  noiseMin: 1
+  walkingNoiseMax: 4
+  sprintingNoiseMax: 8
+  sneakingNoiseMax: 2
   noiseDecayRate: 0.08
   walkingNoiseDelta: 0.08
   sprintingNoiseDelta: 0.15
@@ -424,7 +424,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.09700823, y: -0.11111805}
+  m_Offset: {x: -0.1, y: 0.01}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -434,7 +434,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.855042, y: 0.98959213}
+  m_Size: {x: 0.79, y: 1.11}
   m_EdgeRadius: 0
 --- !u!114 &3580464513175300290
 MonoBehaviour:
@@ -459,9 +459,10 @@ GameObject:
   - component: {fileID: 416932359220262662}
   - component: {fileID: 1108455950996815331}
   - component: {fileID: 2097514251740373209}
+  - component: {fileID: 1102006551792864118}
   m_Layer: 6
   m_Name: Spot Light 2D
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -510,7 +511,7 @@ MonoBehaviour:
   m_NormalMapDistance: 3
   m_NormalMapQuality: 2
   m_UseNormalMap: 0
-  m_ShadowsEnabled: 1
+  m_ShadowsEnabled: 0
   m_ShadowIntensity: 0.75
   m_ShadowSoftness: 0.3
   m_ShadowSoftnessFalloffIntensity: 0.5
@@ -568,4 +569,4 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 5
+  m_Radius: 4
