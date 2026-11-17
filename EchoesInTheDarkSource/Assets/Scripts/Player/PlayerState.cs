@@ -8,7 +8,7 @@ namespace Player
 
         public Vector2 FacingDirection  {
             get => _facingDirection;
-            set => _facingDirection = value.normalized;
+            set => _facingDirection = value.normalized; 
         }
 
         public bool HasClaimedTreasure { get; set; } = false;

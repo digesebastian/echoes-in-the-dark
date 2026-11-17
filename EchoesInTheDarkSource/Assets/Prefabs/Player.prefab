@@ -281,6 +281,10 @@ MonoBehaviour:
   walkingNoiseMax: 8
   sprintingNoiseMax: 12
   sneakingNoiseMax: 5
+  noiseMin: 1
+  walkingNoiseMax: 4
+  sprintingNoiseMax: 8
+  sneakingNoiseMax: 2
   noiseDecayRate: 0.08
   walkingNoiseDelta: 0.08
   sprintingNoiseDelta: 0.15
@@ -521,4 +525,4 @@ CircleCollider2D:
   m_CompositeOperation: 0
   m_CompositeOrder: 0
   m_Offset: {x: 0, y: 0}
-  m_Radius: 5
+  m_Radius: 4
