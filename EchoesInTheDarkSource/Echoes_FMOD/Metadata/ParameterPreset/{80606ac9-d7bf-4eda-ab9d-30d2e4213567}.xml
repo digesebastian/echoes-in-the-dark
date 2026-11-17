@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="ParameterPreset" id="{80606ac9-d7bf-4eda-ab9d-30d2e4213567}">
+		<property name="name">
+			<value>Momentum</value>
+		</property>
+		<relationship name="folder">
+			<destination>{ea81c70b-eb9f-4079-a912-11a1a58f30c5}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{ba9476b6-fa09-4948-b60a-a9cc5d24c94b}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{ba9476b6-fa09-4948-b60a-a9cc5d24c94b}">
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>
