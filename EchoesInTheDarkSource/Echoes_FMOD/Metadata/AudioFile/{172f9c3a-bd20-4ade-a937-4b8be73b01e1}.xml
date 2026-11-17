@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{172f9c3a-bd20-4ade-a937-4b8be73b01e1}">
+		<property name="assetPath">
+			<value>Footsteps/Footsteps_Metal/Footsteps_Metal_Walk/Footsteps_MetalV2_Walk_03.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>0.51864583333333336</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{d133071a-53d9-44e8-b752-358a063ef233}</destination>
+		</relationship>
+	</object>
+</objects>

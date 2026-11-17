@@ -6,6 +6,11 @@ TagManager:
   tags:
   - PlayerSpotlight
   - Wall
+  - Concrete
+  - Wood
+  - Metal
+  - Ground
+  - Rock
   - Treasure
   layers:
   - Default
@@ -16,7 +21,7 @@ TagManager:
   - UI
   - Player
   - Projectile
-  - 
+  - Floor
   - 
   - 
   - 

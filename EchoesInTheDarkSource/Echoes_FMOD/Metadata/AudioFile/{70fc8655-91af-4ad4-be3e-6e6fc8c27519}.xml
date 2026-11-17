@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.03.00">
+	<object class="AudioFile" id="{70fc8655-91af-4ad4-be3e-6e6fc8c27519}">
+		<property name="assetPath">
+			<value>Footsteps/Footsteps_DirtyGround/Footsteps_DirtyGround_Run/Footsteps_DirtyGround_Run_10.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>0.28312500000000002</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{d133071a-53d9-44e8-b752-358a063ef233}</destination>
+		</relationship>
+	</object>
+</objects>
