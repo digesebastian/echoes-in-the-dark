@@ -148,3 +148,6 @@ InitTestScene*.unity*
 fmod_editor.log
 
 EditorBuildSettings.asset
+
+# FMOD dotfiles
+Echoes_FMOD/.*
