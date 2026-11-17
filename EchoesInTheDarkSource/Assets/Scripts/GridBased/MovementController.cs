@@ -26,9 +26,9 @@ namespace GridBasedMovement
         [SerializeField] private float sprintSpeed = 8f;
         
         [SerializeField] private float noiseMin = 1f;
-        [SerializeField] private float walkingNoiseMax = 5f; // 10
-        [SerializeField] private float sprintingNoiseMax = 10f; // 15
-        [SerializeField] private float sneakingNoiseMax = 2f; // 5
+        [SerializeField] private float walkingNoiseMax = 4f;
+        [SerializeField] private float sprintingNoiseMax = 8f; 
+        [SerializeField] private float sneakingNoiseMax = 2f; 
         
         [SerializeField] private float noiseDecayRate = 0.1f;
         [SerializeField] private float walkingNoiseDelta = 0.1f;
@@ -66,7 +66,7 @@ namespace GridBasedMovement
 
         private void Update()
         {
-            Vector2 movementInput = moveAction.ReadValue<Vector2>();
+            Vector2 movementInput = moveAction.ReadValue<Vector2>();    
             bool isMoving =  movementInput != Vector2.zero;
             bool isSprintingInput = Keyboard.current.shiftKey.isPressed;
             bool isSneakingInput = !isSprintingInput && Keyboard.current.spaceKey.isPressed;

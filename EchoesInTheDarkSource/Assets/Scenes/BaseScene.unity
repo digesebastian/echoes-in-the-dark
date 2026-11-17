@@ -3868,7 +3868,7 @@ MonoBehaviour:
           m_Value0: 17391472166230801397
           m_Value1: 8871348875618418941
         Name: Player
-        m_Value: {fileID: 0}
+        m_Value: {fileID: 328182639}
     - rid: 2041023724924174336
       type: {class: 'BlackboardVariable`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]], mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -4075,7 +4075,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: -0.05725598, y: 0.01145107}
+  m_Offset: {x: -0.11, y: 0.01}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -4085,7 +4085,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.106806, y: 1.473244}
+  m_Size: {x: 0.84, y: 1.14}
   m_EdgeRadius: 0
 --- !u!114 &1605883294
 MonoBehaviour:
@@ -4343,6 +4343,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1102006551792864118, guid: 904742295e8bd7c419551f6281a34b53, type: 3}
+      propertyPath: m_Radius
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3505015222913705362, guid: 904742295e8bd7c419551f6281a34b53, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
