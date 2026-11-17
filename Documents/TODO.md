@@ -22,6 +22,10 @@
 - [] Add ripples going outwards from sources of light 
 - [] Add hit detection to edges of light circles
 
+## Enemy Movement / Behavior
+
+- [] Pathfinding
+
 # Nice to have
 
 
