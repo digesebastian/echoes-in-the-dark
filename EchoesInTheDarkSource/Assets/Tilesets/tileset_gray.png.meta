@@ -300,7 +300,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset_gray_7
+      name: door_closed
       rect:
         serializedVersion: 2
         x: 112
@@ -344,7 +344,7 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: tileset_gray_9
+      name: door_open
       rect:
         serializedVersion: 2
         x: 144
@@ -1759,6 +1759,8 @@ TextureImporter:
       Wall_Top_0: -674329127134476731
       Wall_Top_1: 634746532402718442
       Wall_Top_2: -5021650659592769848
+      door_closed: -1169173295960570118
+      door_open: -6861719130684035044
       tileset_gray_10: -6720223796668709782
       tileset_gray_11: 2452630007164996020
       tileset_gray_12: 1993807183
@@ -1812,11 +1814,9 @@ TextureImporter:
       tileset_gray_67: -519184640
       tileset_gray_68: -1615320213
       tileset_gray_69: -1238153823
-      tileset_gray_7: -1169173295960570118
       tileset_gray_70: 1849810352
       tileset_gray_71: -712138265
       tileset_gray_8: -3345573046290123320
-      tileset_gray_9: -6861719130684035044
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

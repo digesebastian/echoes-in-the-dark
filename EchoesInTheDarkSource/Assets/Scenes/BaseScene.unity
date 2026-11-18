@@ -3716,6 +3716,18 @@ PrefabInstance:
       propertyPath: 'managedReferences[2041023724924174336].m_Value.Array.data[3]'
       value: 
       objectReference: {fileID: 1460898591}
+    - target: {fileID: 9006395923729946344, guid: c97f82f129910a34188dcdf0d95291f7, type: 3}
+      propertyPath: m_Color.b
+      value: 0.18553928
+      objectReference: {fileID: 0}
+    - target: {fileID: 9006395923729946344, guid: c97f82f129910a34188dcdf0d95291f7, type: 3}
+      propertyPath: m_Color.g
+      value: 0.18553928
+      objectReference: {fileID: 0}
+    - target: {fileID: 9006395923729946344, guid: c97f82f129910a34188dcdf0d95291f7, type: 3}
+      propertyPath: m_Color.r
+      value: 0.9547169
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3850,6 +3862,10 @@ PrefabInstance:
     - target: {fileID: 3505015222913705362, guid: 904742295e8bd7c419551f6281a34b53, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6356710434036086838, guid: 904742295e8bd7c419551f6281a34b53, type: 3}
+      propertyPath: shadowFade
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 7533385971903319126, guid: 904742295e8bd7c419551f6281a34b53, type: 3}
       propertyPath: m_Name
