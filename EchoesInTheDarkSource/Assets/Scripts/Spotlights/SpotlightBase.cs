@@ -5,27 +5,31 @@ namespace Spotlights
 {
     public abstract class SpotlightBase : MonoBehaviour
     {
-        [SerializeField] private float shadowFade = 1.0f;
+        [SerializeField] private float initialRadius = 5.0f;
+        [SerializeField] private float shadowFade = 1.5f;
         
-        private Light2D _spotlight;
         private Rigidbody2D _rb;
+        protected Light2D Spotlight;
         protected CircleCollider2D SpotlightCollider;
         
         protected virtual void Awake()
         {
             _rb = GetComponent<Rigidbody2D>();
-            _spotlight = GetComponentInChildren<Light2D>();
-            SpotlightCollider = GetComponent<CircleCollider2D>();
             _rb.bodyType = RigidbodyType2D.Kinematic; // ensure the body is kinematic
+            
+            Spotlight = GetComponentInChildren<Light2D>();
+            SpotlightCollider = GetComponent<CircleCollider2D>();
+            SetRadius(initialRadius);
         }
 
         // Implementing members must handle collisions with the spotlight
+        // At the least this method must be an empty method, since this means the spotlight handles it's own collisions
         public abstract void OnTriggerEnter2D(Collider2D other);
         
         public void SetRadius(float radius)
         {
-            _spotlight.pointLightOuterRadius = radius;
-            SpotlightCollider.radius = _spotlight.pointLightOuterRadius - shadowFade;
+            Spotlight.pointLightOuterRadius = radius;
+            SpotlightCollider.radius = Spotlight.pointLightOuterRadius - shadowFade;
         }
     }
 }

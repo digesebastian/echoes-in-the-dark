@@ -23,7 +23,7 @@ public partial class MonitorPlayerCollisionAction : Action
 
     protected override Status OnStart()
     {
-        _guardCircleCollider = GameObject.GetComponent<CircleCollider2D>();
+        _guardCircleCollider = GameObject.GetComponentInChildren<CircleCollider2D>();
         _guardCollider = GameObject.GetComponent<BoxCollider2D>();
 
         if (Player.Value != null) _playerCircleCollider = Player.Value.GetComponentInChildren<CircleCollider2D>();
