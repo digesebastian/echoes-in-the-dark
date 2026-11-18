@@ -20,7 +20,8 @@ public partial class MonitorCoinCollisionAction : Action
 
     protected override Status OnStart()
     {
-        _guardCollider = GameObject.GetComponent<CircleCollider2D>();
+        _guardCollider = GameObject.GetComponentInChildren<CircleCollider2D>();
+        
         _coinLayerMask = LayerMask.GetMask("Projectile");
         return Status.Running;
     }
@@ -39,7 +40,7 @@ public partial class MonitorCoinCollisionAction : Action
         foreach (Collider2D hit in hits)
         {
             CoinProjectile coin = hit.GetComponentInParent<CoinProjectile>();
-            if (coin == null || !coin.HasLanded || !_heardCoins.Add(coin)) continue;
+            if (coin == null || !coin.HasHit || !_heardCoins.Add(coin)) continue;
 
             if (IsPlayerInRadius) continue;
             

@@ -25,6 +25,11 @@ namespace Spotlights
         // Implementing members must handle collisions with the spotlight
         // At the least this method must be an empty method, since this means the spotlight handles it's own collisions
         public abstract void OnTriggerEnter2D(Collider2D other);
+
+        public float GetRadius()
+        {
+            return Spotlight.pointLightOuterRadius;
+        }
         
         public void SetRadius(float radius)
         {
