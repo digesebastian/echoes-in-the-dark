@@ -14,9 +14,9 @@ public partial class MoveTo2DAction : Action
     // Explicit declarations ensure the compiler always finds them
     [SerializeReference] public BlackboardVariable<GameObject> Agent;
     [SerializeReference] public BlackboardVariable<Vector3> TargetPosition;
-
+    [SerializeReference] public BlackboardVariable<float> WalkingSpeed;
+    
     // Direct block inputs
-    public float speed = 2.0f;
     public float stoppingDistance = 0.2f;
 
     [Header("Sprite Views (Optional)")]
@@ -63,11 +63,11 @@ public partial class MoveTo2DAction : Action
 
         if (_rb2d != null && !_rb2d.isKinematic)
         {
-            _rb2d.linearVelocity = dir * speed;
+            _rb2d.linearVelocity = dir * WalkingSpeed;
         }
         else
         {
-            Agent.Value.transform.position = Vector2.MoveTowards(currentPos, target, speed * Time.deltaTime);
+            Agent.Value.transform.position = Vector2.MoveTowards(currentPos, target, WalkingSpeed * Time.deltaTime);
         }
 
         UpdateFacing(dir);

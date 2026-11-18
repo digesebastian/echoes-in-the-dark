@@ -63,7 +63,7 @@ namespace Player
         private void ThrowObject(float throwForce)
         {
             Vector2 target = (Vector2)transform.position +
-                             _playerState.GetFacingDirection() * throwForce;
+                             _playerState.FacingDirection * throwForce;
 
             ProjectileBase projectile = Instantiate(projectilePrefab, transform.position, Quaternion.identity);
             projectile.Throw(target, 10f);

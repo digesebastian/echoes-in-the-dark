@@ -1,9 +1,9 @@
-﻿using Player;
+﻿using System;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering.Universal;
 
-namespace GridBasedMovement
+namespace Player
 {
     public class MovementController : MonoBehaviour
     {
@@ -82,6 +82,15 @@ namespace GridBasedMovement
             rb.linearVelocity = currentSpeed * movementInput.normalized;
         }
 
+        private void OnTriggerEnter2D(Collider2D other)
+        {
+            if (other.CompareTag("Treasure"))
+            {
+                _playerState.HasClaimedTreasure = true;
+                Destroy(other.gameObject);
+            }
+        }
+
         private void UpdateAnimator(Vector2 direction, SpeedState speedState)
         {
             bool isMoving = speedState != SpeedState.Idle;
@@ -93,12 +102,12 @@ namespace GridBasedMovement
                 _animator.SetFloat(HorizontalMovement, direction.x);
                 _animator.SetFloat(VerticalMovement, direction.y);
                 
-                _playerState.SetFacingDirection(direction);
+                _playerState.FacingDirection = direction;
             }
             else
             {
-                _animator.SetFloat(PreviousHorizontalMovement, _playerState.GetFacingDirection().x);
-                _animator.SetFloat(PreviousVerticalMovement, _playerState.GetFacingDirection().y);
+                _animator.SetFloat(PreviousHorizontalMovement, _playerState.FacingDirection.x);
+                _animator.SetFloat(PreviousVerticalMovement, _playerState.FacingDirection.y);
             }
         }
 

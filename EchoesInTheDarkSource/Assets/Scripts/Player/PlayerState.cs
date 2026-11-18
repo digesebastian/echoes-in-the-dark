@@ -6,14 +6,11 @@ namespace Player
     {
         private Vector2 _facingDirection = Vector2.down;
 
-        public Vector2 GetFacingDirection()
-        {
-            return _facingDirection;
+        public Vector2 FacingDirection  {
+            get => _facingDirection;
+            set => _facingDirection = value.normalized; 
         }
-        
-        public void SetFacingDirection(Vector2 newDirection)
-        {
-            _facingDirection = newDirection.normalized;
-        }
+
+        public bool HasClaimedTreasure { get; set; } = false;
     }
 }
