@@ -2268,7 +2268,7 @@ MonoBehaviour:
   - rid: 1919014128431399052
   - rid: 2041023790494777567
   - rid: 2003672319921487948
-  m_VersionTimestamp: 639306038460992847
+  m_VersionTimestamp: 639306049858368246
   m_CommandBuffer:
     m_Commands: []
   m_RuntimeBlackboardAsset: {fileID: -6367369350085393507}
@@ -2282,7 +2282,7 @@ MonoBehaviour:
           m_Value0: 14650537569313553883
           m_Value1: 14531887152546392817
         Name: TargetDestination
-        IsExposed: 1
+        IsExposed: 0
         m_IsShared: 0
         m_Value: {x: 0, y: 0, z: 0}
     - rid: 2003672319921487948
@@ -2352,7 +2352,7 @@ MonoBehaviour:
           m_Value0: 12985635390834958687
           m_Value1: 7632137015033192084
         Name: IsPlayerInRadius
-        IsExposed: 1
+        IsExposed: 0
         m_IsShared: 0
         m_Value: 0
     - rid: 2041023790494777567
@@ -2362,7 +2362,7 @@ MonoBehaviour:
           m_Value0: 12901186128928323151
           m_Value1: 7389351334694229534
         Name: coin_points
-        IsExposed: 1
+        IsExposed: 0
         m_IsShared: 0
         m_Value: []
 --- !u!114 &7459875736728231230
