@@ -61,7 +61,7 @@ public partial class MoveTo2DAction : Action
 
         Vector2 dir = (target - currentPos).normalized;
 
-        if (_rb2d != null && !_rb2d.isKinematic)
+        if (_rb2d != null && _rb2d.bodyType != RigidbodyType2D.Kinematic)
         {
             _rb2d.linearVelocity = dir * WalkingSpeed;
         }
