@@ -15,35 +15,36 @@ public partial class MonitorPlayerCollisionAction : Action
     [SerializeReference] public BlackboardVariable<List<GameObject>> HighPoints;
     [SerializeReference] public BlackboardVariable<bool> IsPlayerInRadius;
 
+    private Collider2D _guardCircleCollider;
     private Collider2D _guardCollider;
+    private Collider2D _playerCircleCollider;
     private Collider2D _playerCollider;
     private GameObject _chaseTargetMarker;
-    private float _catchRadius;
 
     protected override Status OnStart()
     {
-        _guardCollider = GameObject.GetComponent<Collider2D>();
+        _guardCircleCollider = GameObject.GetComponent<CircleCollider2D>();
+        _guardCollider = GameObject.GetComponent<BoxCollider2D>();
 
-        if (Player.Value != null) _playerCollider = Player.Value.GetComponentInChildren<CircleCollider2D>();
-
+        if (Player.Value != null) _playerCircleCollider = Player.Value.GetComponentInChildren<CircleCollider2D>();
+        if (Player.Value != null) _playerCollider = Player.Value.GetComponent<BoxCollider2D>();
+        
         _chaseTargetMarker = new GameObject("ChaseTargetMarker");
-        _catchRadius = 1.2f;
 
         return Status.Running;
     }
 
     protected override Status OnUpdate()
     {
-        if (_guardCollider == null || _playerCollider == null) return Status.Failure;
-        float distance = Vector2.Distance(GameObject.transform.position, Player.Value.transform.position);
-        if (distance <= _catchRadius)
+        if (_guardCircleCollider == null || _playerCircleCollider == null || _playerCollider == null) return Status.Failure;
+        if (_guardCollider.IsTouching(_playerCollider))
         {
             Debug.Log("Player Caught! Game Over.");
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             return Status.Success;
         }
 
-        bool isOverlapping = _guardCollider.IsTouching(_playerCollider);
+        bool isOverlapping = _guardCircleCollider.IsTouching(_playerCircleCollider);
         IsPlayerInRadius.Value = isOverlapping;
 
         if (isOverlapping)

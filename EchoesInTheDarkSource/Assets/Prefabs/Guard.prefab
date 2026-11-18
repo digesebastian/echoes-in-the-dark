@@ -228,7 +228,7 @@ MonoBehaviour:
         GUID:
           m_Value0: 15988989939401951546
           m_Value1: 11054770946104814510
-        Name: MovementSpeed
+        Name: WalkingSpeed
         m_Value: 4
     - rid: 2041023724441042944
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
