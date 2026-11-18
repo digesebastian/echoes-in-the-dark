@@ -3119,11 +3119,6 @@ Transform:
   - {fileID: 1460898592}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &1165779204 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7533385971903319126, guid: 904742295e8bd7c419551f6281a34b53, type: 3}
-  m_PrefabInstance: {fileID: 2473929644559184482}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1193073468
 GameObject:
   m_ObjectHideFlags: 0
@@ -3706,17 +3701,8 @@ MonoBehaviour:
           m_Value1: 8871348875618418941
         Name: Player
         m_Value: {fileID: 328182639}
-    - rid: 2041023724441042945
-      type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
-      data:
-        GUID:
-          m_Value0: 17391472166230801397
-          m_Value1: 8871348875618418941
-        Name: Player
-        m_Value: {fileID: 1165779204}
     - rid: 2041023724924174336
-      type: {class: 'BlackboardVariable`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject,
-          UnityEngine.CoreModule]], mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      type: {class: 'BlackboardVariable`1[[System.Collections.Generic.List`1[[UnityEngine.GameObject, UnityEngine.CoreModule]], mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
           m_Value0: 13300069962426799524
@@ -3963,31 +3949,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3505015222913705362, guid: 904742295e8bd7c419551f6281a34b53, type: 3}
   m_PrefabInstance: {fileID: 2473929644559184482}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1654380141
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 328182639}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bb223ed24ad66794cb531c302df6014c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::CharacterAudio
-  footstepEvent:
-    Guid:
-      Data1: 14082979
-      Data2: 1120722658
-      Data3: -1140537455
-      Data4: 1452676686
-    Path: event:/Footsteps
-  isPlayer: 1
-  volumeMultiplier: 0.9
-  floorLayer:
-    serializedVersion: 2
-    m_Bits: 256
-  walkStepInterval: 0.45
 --- !u!1 &2075776809
 GameObject:
   m_ObjectHideFlags: 0
@@ -4209,10 +4170,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 7533385971903319126, guid: 904742295e8bd7c419551f6281a34b53, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1654380141}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 904742295e8bd7c419551f6281a34b53, type: 3}
 --- !u!1001 &4784997314503853010
 PrefabInstance:

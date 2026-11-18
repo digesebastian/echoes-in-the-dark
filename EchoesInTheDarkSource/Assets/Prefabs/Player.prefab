@@ -153,6 +153,7 @@ GameObject:
   - component: {fileID: 4192621817121935373}
   - component: {fileID: 7509411828303563038}
   - component: {fileID: 3580464513175300290}
+  - component: {fileID: -4830593183265662996}
   m_Layer: 6
   m_Name: Player
   m_TagString: Player
@@ -448,6 +449,31 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: aa5a2c08de7d90640b224a71d818c672, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerState
+--- !u!114 &-4830593183265662996
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7533385971903319126}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb223ed24ad66794cb531c302df6014c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterAudio
+  footstepEvent:
+    Guid:
+      Data1: 14082979
+      Data2: 1120722658
+      Data3: -1140537455
+      Data4: 1452676686
+    Path: event:/Footsteps
+  isPlayer: 1
+  volumeMultiplier: 1
+  floorLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  walkStepInterval: 0.45
 --- !u!1 &8110468027656843973
 GameObject:
   m_ObjectHideFlags: 0

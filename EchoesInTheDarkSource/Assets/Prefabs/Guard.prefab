@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 2546037486511377399}
   - component: {fileID: 5611053292347648286}
   - component: {fileID: 3119467622328298667}
+  - component: {fileID: -7923625430151772349}
   m_Layer: 0
   m_Name: Guard
   m_TagString: Untagged
@@ -214,12 +215,21 @@ MonoBehaviour:
   - rid: 2041023724441042944
   - rid: 2041023724441042945
   - rid: 2041023724924174336
+  - rid: 2003672343899537408
   m_OriginalGraph: {fileID: 0}
   m_IsInitialised: 0
   m_IsStarted: 0
   references:
     version: 2
     RefIds:
+    - rid: 2003672343899537408
+      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+      data:
+        GUID:
+          m_Value0: 15988989939401951546
+          m_Value1: 11054770946104814510
+        Name: MovementSpeed
+        m_Value: 4
     - rid: 2041023724441042944
       type: {class: 'BlackboardVariable`1[[UnityEngine.GameObject, UnityEngine.CoreModule]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
@@ -294,6 +304,31 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 1.106806, y: 1.473244}
   m_EdgeRadius: 0
+--- !u!114 &-7923625430151772349
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 395696060636278728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb223ed24ad66794cb531c302df6014c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CharacterAudio
+  footstepEvent:
+    Guid:
+      Data1: 14082979
+      Data2: 1120722658
+      Data3: -1140537455
+      Data4: 1452676686
+    Path: event:/Footsteps
+  isPlayer: 0
+  volumeMultiplier: 1
+  floorLayer:
+    serializedVersion: 2
+    m_Bits: 256
+  walkStepInterval: 0.45
 --- !u!1 &7200164741115508949
 GameObject:
   m_ObjectHideFlags: 0
