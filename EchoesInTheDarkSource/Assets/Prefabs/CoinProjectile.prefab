@@ -271,7 +271,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9083516124875437872, guid: 5aba4a1d923457549a3f4c73ed78bb1c, type: 3}
       propertyPath: m_Layer
-      value: 7
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -298,8 +298,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b277a9583d7bf3b4d9edabea142104d8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Spotlights.ProjectileSpotlight
-  initialRadius: 5
-  shadowFade: 1.5
+  initialRadius: 0
+  shadowFade: 0.5
 --- !u!4 &7640779086739295151 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5293987339129074876, guid: 5aba4a1d923457549a3f4c73ed78bb1c, type: 3}

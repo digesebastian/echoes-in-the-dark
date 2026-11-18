@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 5611053292347648286}
   - component: {fileID: 3119467622328298667}
   - component: {fileID: -7923625430151772349}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Guard
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -84,8 +84,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
+  m_SortingLayerID: -1064980813
+  m_SortingLayer: 2
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -8269309981894542664, guid: 88512c9299245e54089610a6dd411400, type: 3}

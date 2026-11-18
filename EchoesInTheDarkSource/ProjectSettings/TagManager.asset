@@ -19,7 +19,7 @@ TagManager:
   - Obstacle
   - Water
   - UI
-  - Player
+  - Character
   - Projectile
   - Floor
   - 
@@ -49,10 +49,10 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Projectiles
+  - name: Projectile
     uniqueID: 2298506393
     locked: 0
-  - name: Player
+  - name: Character
     uniqueID: 3229986483
     locked: 0
   m_RenderingLayers:

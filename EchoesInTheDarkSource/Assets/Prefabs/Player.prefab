@@ -56,9 +56,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3724279906858336079}
   - component: {fileID: 4052543637876981453}
-  m_Layer: 6
+  m_Layer: 0
   m_Name: Chargebar
-  m_TagString: Player
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

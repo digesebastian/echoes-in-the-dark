@@ -20,6 +20,7 @@ public partial class MonitorPlayerCollisionAction : Action
     private Collider2D _playerCircleCollider;
     private Collider2D _playerCollider;
     private GameObject _chaseTargetMarker;
+    private LayerMask _obstacleLayerMask;
 
     protected override Status OnStart()
     {
@@ -28,6 +29,8 @@ public partial class MonitorPlayerCollisionAction : Action
 
         if (Player.Value != null) _playerCircleCollider = Player.Value.GetComponentInChildren<CircleCollider2D>();
         if (Player.Value != null) _playerCollider = Player.Value.GetComponent<BoxCollider2D>();
+        
+        _obstacleLayerMask = LayerMask.GetMask("Obstacle");
         
         _chaseTargetMarker = new GameObject("ChaseTargetMarker");
 
@@ -43,12 +46,21 @@ public partial class MonitorPlayerCollisionAction : Action
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             return Status.Success;
         }
-
+        
+        
         bool isOverlapping = _guardCircleCollider.IsTouching(_playerCircleCollider);
         IsPlayerInRadius.Value = isOverlapping;
+        
 
         if (isOverlapping)
         {
+            // Check for walls between the player and the guard
+            RaycastHit2D hit = Physics2D.Linecast(GameObject.transform.position, Player.Value.transform.position, _obstacleLayerMask);
+            if (hit.collider != null)
+            {
+                return Status.Running;
+            }
+            
             _chaseTargetMarker.transform.position = Player.Value.transform.position;
 
             if (!HighPoints.Value.Contains(_chaseTargetMarker)) HighPoints.Value.Add(_chaseTargetMarker);

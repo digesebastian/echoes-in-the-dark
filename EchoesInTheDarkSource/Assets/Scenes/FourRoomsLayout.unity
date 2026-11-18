@@ -4673,6 +4673,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 8089493786187752120, guid: 904742295e8bd7c419551f6281a34b53, type: 3}
+      propertyPath: m_ApplyToSortingLayers.Array.size
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 8110468027656843973, guid: 904742295e8bd7c419551f6281a34b53, type: 3}
