@@ -6,7 +6,7 @@ using Action = Unity.Behavior.Action;
 [Serializable, Unity.Properties.GeneratePropertyBag]
 [NodeDescription(
     name: "Move To 2D",
-    story: "Move [Agent] to [TargetPosition] at speed [walkingSpeed]",
+    story: "Move [Agent] to [TargetPosition]",
     category: "Action/Navigation",
     id: "f2b3c4d5e6a17890123456789abcdef1")]
 public partial class MoveTo2DAction : Action
