@@ -11,7 +11,7 @@ TagManager:
   - Metal
   - Ground
   - Rock
-  - Treasure
+  - ClearLevelZone
   layers:
   - Default
   - TransparentFX

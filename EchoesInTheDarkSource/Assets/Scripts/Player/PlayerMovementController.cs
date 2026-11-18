@@ -3,6 +3,7 @@ using Spotlights;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 
 namespace Player
 {
@@ -83,10 +84,17 @@ namespace Player
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.CompareTag("Treasure"))
+            if (other.CompareTag("ClearLevelZone"))
             {
-                _playerState.HasClaimedTreasure = true;
-                Destroy(other.gameObject);
+                if (_playerState.HasClaimedTreasure)
+                {
+                    Debug.Log("u are winer");
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                }
+                else
+                {
+                    Debug.LogWarning("This shouldn't happen");
+                }
             }
         }
 
