@@ -13,6 +13,7 @@ public partial class MonitorPlayerCollisionAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Player;
     [SerializeReference] public BlackboardVariable<List<GameObject>> HighPoints;
+    [SerializeReference] public BlackboardVariable<bool> IsPlayerInRadius;
 
     private Collider2D _guardCollider;
     private Collider2D _playerCollider;
@@ -41,8 +42,10 @@ public partial class MonitorPlayerCollisionAction : Action
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             return Status.Success;
         }
-        
+
         bool isOverlapping = _guardCollider.IsTouching(_playerCollider);
+        IsPlayerInRadius.Value = isOverlapping;
+
         if (isOverlapping)
         {
             _chaseTargetMarker.transform.position = Player.Value.transform.position;
