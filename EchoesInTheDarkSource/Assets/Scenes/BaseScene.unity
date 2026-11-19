@@ -3697,9 +3697,42 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5611053292347648286, guid: c97f82f129910a34188dcdf0d95291f7, type: 3}
+      propertyPath: 'managedReferences[2041023876334092957]'
+      value: 'Unity.Behavior Unity.Behavior.BlackboardVariable`1[[System.Single,
+        mscorlib]]'
+      objectReference: {fileID: 0}
+    - target: {fileID: 5611053292347648286, guid: c97f82f129910a34188dcdf0d95291f7, type: 3}
+      propertyPath: managedReferences[2003672343899537408].Name
+      value: WalkingSpeed
+      objectReference: {fileID: 0}
+    - target: {fileID: 5611053292347648286, guid: c97f82f129910a34188dcdf0d95291f7, type: 3}
+      propertyPath: managedReferences[2041023876334092957].Name
+      value: RunningSpeed
+      objectReference: {fileID: 0}
+    - target: {fileID: 5611053292347648286, guid: c97f82f129910a34188dcdf0d95291f7, type: 3}
+      propertyPath: m_BlackboardVariableOverridesList.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5611053292347648286, guid: c97f82f129910a34188dcdf0d95291f7, type: 3}
       propertyPath: managedReferences[2041023724441042945].m_Value
       value: 
       objectReference: {fileID: 328182639}
+    - target: {fileID: 5611053292347648286, guid: c97f82f129910a34188dcdf0d95291f7, type: 3}
+      propertyPath: managedReferences[2041023876334092957].m_Value
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 5611053292347648286, guid: c97f82f129910a34188dcdf0d95291f7, type: 3}
+      propertyPath: 'm_BlackboardVariableOverridesList.Array.data[4]'
+      value: 2041023876334092957
+      objectReference: {fileID: 0}
+    - target: {fileID: 5611053292347648286, guid: c97f82f129910a34188dcdf0d95291f7, type: 3}
+      propertyPath: managedReferences[2041023876334092957].GUID.m_Value0
+      value: 10836390373214543505
+      objectReference: {fileID: 0}
+    - target: {fileID: 5611053292347648286, guid: c97f82f129910a34188dcdf0d95291f7, type: 3}
+      propertyPath: managedReferences[2041023876334092957].GUID.m_Value1
+      value: 140142153755535095
+      objectReference: {fileID: 0}
     - target: {fileID: 5611053292347648286, guid: c97f82f129910a34188dcdf0d95291f7, type: 3}
       propertyPath: 'managedReferences[2041023724924174336].m_Value.Array.data[0]'
       value: 
