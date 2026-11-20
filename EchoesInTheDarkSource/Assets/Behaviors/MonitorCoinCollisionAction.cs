@@ -20,8 +20,8 @@ public partial class MonitorCoinCollisionAction : Action
 
     protected override Status OnStart()
     {
-        _guardCollider = GameObject.GetComponent<CircleCollider2D>();
-        _coinLayerMask = LayerMask.GetMask("Projectile");
+        _guardCollider = GameObject.GetComponentInChildren<CircleCollider2D>();
+        _coinLayerMask = LayerMask.GetMask("CoinCircle");
         return Status.Running;
     }
 
