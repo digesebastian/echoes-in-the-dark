@@ -14,7 +14,7 @@ public class GridPathfinder2D : MonoBehaviour
     public float nodeRadius = 0.25f;
 
     [Header("Obstacle Detection")]
-    [Tooltip("Select ONLY the Layer(s) your solid 2D walls/obstacles are on")]
+    [Tooltip("Select ONLY the Layer(s) your solid 2D walls/obstacles/locked doors are on")]
     public LayerMask unwalkableMask;
     [Tooltip("Extra clearance buffer around walls (set to at least your guard's collider radius, e.g., 0.3)")]
     public float agentClearance = 0.3f;
@@ -69,6 +69,31 @@ public class GridPathfinder2D : MonoBehaviour
         }
     }
 
+    public void UpdateBounds(Bounds bounds)
+    {
+        if (_grid == null) return;
+
+        float pad = nodeRadius + agentClearance;
+        Node minNode = NodeFromWorldPoint(new Vector2(bounds.min.x - pad, bounds.min.y - pad));
+        Node maxNode = NodeFromWorldPoint(new Vector2(bounds.max.x + pad, bounds.max.y + pad));
+
+        ContactFilter2D filter = new ContactFilter2D();
+        filter.SetLayerMask(unwalkableMask);
+        filter.useLayerMask = true;
+        filter.useTriggers = false;
+
+        float checkRadius = Mathf.Max(0.01f, nodeRadius + agentClearance);
+
+        for (int x = minNode.gridX; x <= maxNode.gridX; x++)
+        {
+            for (int y = minNode.gridY; y <= maxNode.gridY; y++)
+            {
+                int hits = Physics2D.OverlapCircle(_grid[x, y].worldPosition, checkRadius, filter, _hitBuffer);
+                _grid[x, y].walkable = (hits == 0);
+            }
+        }
+    }
+
     public List<Vector2> FindPath(Vector2 startPos, Vector2 targetPos)
     {
         if (_grid == null) return null;
@@ -108,7 +133,6 @@ public class GridPathfinder2D : MonoBehaviour
                 if (!neighbor.walkable || closedSet.Contains(neighbor))
                     continue;
 
-                // Strict diagonal check: prevent squeezing past any wall corner
                 if (neighbor.gridX != currentNode.gridX && neighbor.gridY != currentNode.gridY)
                 {
                     if (!_grid[currentNode.gridX, neighbor.gridY].walkable ||
