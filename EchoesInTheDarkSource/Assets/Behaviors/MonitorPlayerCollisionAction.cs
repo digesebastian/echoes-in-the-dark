@@ -22,9 +22,26 @@ public partial class MonitorPlayerCollisionAction : Action
 
     protected override Status OnStart()
     {
-        _guardCollider = GameObject.GetComponent<Collider2D>();
+        if (GameObject == null)
+        {
+            Debug.LogError("MonitorPlayerCollisionAction: Guard GameObject is null.");
+            return Status.Failure;
+        }
 
-        if (Player.Value != null) _playerCollider = Player.Value.GetComponentInChildren<CircleCollider2D>();
+        _guardCollider = GameObject.GetComponentInChildren<Collider2D>();
+
+        if (Player != null && Player.Value != null)
+        {
+            _playerCollider = Player.Value.GetComponentInChildren<CircleCollider2D>();
+            if (_playerCollider == null)
+                _playerCollider = Player.Value.GetComponentInChildren<Collider2D>();
+        }
+
+        if (_guardCollider == null || _playerCollider == null)
+        {
+            Debug.LogWarning($"MonitorPlayerCollisionAction: Missing Collider2D on guard ({_guardCollider != null}) or player ({_playerCollider != null}).");
+            return Status.Failure;
+        }
 
         _chaseTargetMarker = new GameObject("ChaseTargetMarker");
         _catchRadius = 1.2f;
@@ -34,7 +51,12 @@ public partial class MonitorPlayerCollisionAction : Action
 
     protected override Status OnUpdate()
     {
-        if (_guardCollider == null || _playerCollider == null) return Status.Failure;
+        if (GameObject == null || Player == null || Player.Value == null)
+            return Status.Failure;
+
+        if (_guardCollider == null || _playerCollider == null)
+            return Status.Failure;
+
         float distance = Vector2.Distance(GameObject.transform.position, Player.Value.transform.position);
         if (distance <= _catchRadius)
         {
@@ -44,13 +66,24 @@ public partial class MonitorPlayerCollisionAction : Action
         }
 
         bool isOverlapping = _guardCollider.IsTouching(_playerCollider);
-        IsPlayerInRadius.Value = isOverlapping;
 
-        if (isOverlapping)
+        if (IsPlayerInRadius != null)
+        {
+            IsPlayerInRadius.Value = isOverlapping;
+        }
+
+        if (isOverlapping && _chaseTargetMarker != null)
         {
             _chaseTargetMarker.transform.position = Player.Value.transform.position;
 
-            if (!HighPoints.Value.Contains(_chaseTargetMarker)) HighPoints.Value.Add(_chaseTargetMarker);
+            if (HighPoints != null)
+            {
+                if (HighPoints.Value == null)
+                    HighPoints.Value = new List<GameObject>();
+
+                if (!HighPoints.Value.Contains(_chaseTargetMarker))
+                    HighPoints.Value.Add(_chaseTargetMarker);
+            }
         }
 
         return Status.Running;
@@ -58,7 +91,15 @@ public partial class MonitorPlayerCollisionAction : Action
 
     protected override void OnEnd()
     {
+        if (HighPoints != null && HighPoints.Value != null && _chaseTargetMarker != null)
+        {
+            HighPoints.Value.Remove(_chaseTargetMarker);
+        }
 
-        if (_chaseTargetMarker != null) UnityEngine.Object.Destroy(_chaseTargetMarker);
+        if (_chaseTargetMarker != null)
+        {
+            UnityEngine.Object.Destroy(_chaseTargetMarker);
+            _chaseTargetMarker = null;
+        }
     }
 }

@@ -155,7 +155,7 @@ MonoBehaviour:
   - rid: 2041023790494777836
   - rid: 2041023790494778073
   - rid: 2041023814135447627
-  m_VersionTimestamp: 639306030887394537
+  m_VersionTimestamp: 639309921372784283
   m_SerializedVersion: 3
   m_DebugInfo: {fileID: -3823141564098093126}
   m_RuntimeGraph: {fileID: 7459875736728231230}
@@ -266,6 +266,11 @@ MonoBehaviour:
         m_SerializableType: System.Collections.Generic.List`1[[UnityEngine.GameObject,
           UnityEngine.CoreModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null]],
           mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089
+      Tooltip: 
+    - Name: IsPlayerInRadius
+      Type:
+        m_SerializableType: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
+          PublicKeyToken=b77a5c561934e089
       Tooltip: 
     NamedChildren: []
     IsPlaceholder: 0
@@ -380,11 +385,6 @@ MonoBehaviour:
       Type:
         m_SerializableType: UnityEngine.Vector3, UnityEngine.CoreModule, Version=0.0.0.0,
           Culture=neutral, PublicKeyToken=null
-      Tooltip: 
-    - Name: WalkingSpeed
-      Type:
-        m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
-          PublicKeyToken=b77a5c561934e089
       Tooltip: 
     NamedChildren: []
     IsPlaceholder: 0
@@ -543,7 +543,7 @@ MonoBehaviour:
     - rid: 1919014128431399502
       type: {class: ActionNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
-        Position: {x: 416.0172, y: 627.4631}
+        Position: {x: 407.33353, y: 624.4972}
         ID:
           m_Value0: 10624472414008219892
           m_Value1: 8696469144530288031
@@ -560,7 +560,6 @@ MonoBehaviour:
         m_FieldValues:
         - rid: 1919014128431399505
         - rid: 1919014128431399506
-        - rid: 2003672319921487946
     - rid: 1919014128431399503
       type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
       data:
@@ -696,35 +695,25 @@ MonoBehaviour:
         IsExposed: 1
         m_IsShared: 0
         m_Value: {x: 0, y: 0, z: 0}
-    - rid: 2003672319921487946
+    - rid: 1919014448199368780
       type: {class: BehaviorGraphNodeModel/FieldModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
-        FieldName: WalkingSpeed
+        FieldName: IsPlayerInRadius
         Type:
-          m_SerializableType: System.Single, mscorlib, Version=4.0.0.0, Culture=neutral,
+          m_SerializableType: System.Boolean, mscorlib, Version=4.0.0.0, Culture=neutral,
             PublicKeyToken=b77a5c561934e089
         LocalValue:
-          rid: 2003672319921487947
+          rid: 1919014448199368781
         LinkedVariable:
-          rid: 2003672343899537483
-    - rid: 2003672319921487947
-      type: {class: 'BlackboardVariable`1[[System.Single, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
+          rid: -2
+    - rid: 1919014448199368781
+      type: {class: 'BlackboardVariable`1[[System.Boolean, mscorlib]]', ns: Unity.Behavior, asm: Unity.Behavior}
       data:
         GUID:
           m_Value0: 0
           m_Value1: 0
         Name: 
         m_Value: 0
-    - rid: 2003672343899537483
-      type: {class: 'TypedVariableModel`1[[System.Single, mscorlib]]', ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
-      data:
-        ID:
-          m_Value0: 15988989939401951546
-          m_Value1: 11054770946104814510
-        Name: WalkingSpeed
-        IsExposed: 1
-        m_IsShared: 0
-        m_Value: 5
     - rid: 2041023558857261245
       type: {class: StartNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
@@ -1196,6 +1185,7 @@ MonoBehaviour:
         m_FieldValues:
         - rid: 2041023626900407256
         - rid: 2041023632907436211
+        - rid: 1919014448199368780
     - rid: 2041023626900407254
       type: {class: PortModel, ns: Unity.Behavior.GraphFramework, asm: Unity.Behavior.GraphFramework}
       data:
@@ -1327,7 +1317,7 @@ MonoBehaviour:
     - rid: 2041023632907436727
       type: {class: ActionNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
-        Position: {x: 129.90189, y: 551.3067}
+        Position: {x: 128.63309, y: 551.3067}
         ID:
           m_Value0: 10976344871904466753
           m_Value1: 13032529214752493705
@@ -1476,7 +1466,7 @@ MonoBehaviour:
     - rid: 2041023632907436758
       type: {class: ActionNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
-        Position: {x: -320.90836, y: 465.8235}
+        Position: {x: -321.8674, y: 465.8235}
         ID:
           m_Value0: 16291056784634356505
           m_Value1: 1051286877839731447
@@ -1839,7 +1829,7 @@ MonoBehaviour:
     - rid: 2041023790494777835
       type: {class: ActionNodeModel, ns: Unity.Behavior, asm: Unity.Behavior.Authoring}
       data:
-        Position: {x: -98.69074, y: 478.66904}
+        Position: {x: -97.42195, y: 478.66904}
         ID:
           m_Value0: 16651321574057777734
           m_Value1: 18349604944036851357
@@ -2466,6 +2456,8 @@ MonoBehaviour:
           rid: 2003672343899537490
         HighPoints:
           rid: 2003672343899537489
+        IsPlayerInRadius:
+          rid: -2
     - rid: 2003672343899537496
       type: {class: MonitorCoinCollisionAction, ns: , asm: Assembly-CSharp}
       data:
@@ -2886,9 +2878,9 @@ MonoBehaviour:
           rid: 2003672343899537486
         TargetPosition:
           rid: 2003672343899537492
-        WalkingSpeed:
-          rid: 2003672343899537494
+        speed: 2.5
         stoppingDistance: 0.2
+        repathInterval: 0.35
         frontSprite: {fileID: 0}
         backSprite: {fileID: 0}
         sideSprite: {fileID: 0}
@@ -3000,7 +2992,7 @@ MonoBehaviour:
         BlackboardGroupReferences: []
         Root:
           rid: 2003672343899537484
-        m_VersionTimestamp: 639306030887394537
+        m_VersionTimestamp: 639309921372784283
     - rid: 2041023558857261249
       type: {class: BlackboardReference, ns: Unity.Behavior, asm: Unity.Behavior}
       data:

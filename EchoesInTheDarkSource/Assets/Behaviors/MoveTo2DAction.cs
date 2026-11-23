@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Unity.Behavior;
 using UnityEngine;
 using Action = Unity.Behavior.Action;
@@ -11,13 +12,14 @@ using Action = Unity.Behavior.Action;
     id: "f2b3c4d5e6a17890123456789abcdef1")]
 public partial class MoveTo2DAction : Action
 {
-    // Explicit declarations ensure the compiler always finds them
     [SerializeReference] public BlackboardVariable<GameObject> Agent;
     [SerializeReference] public BlackboardVariable<Vector3> TargetPosition;
-    [SerializeReference] public BlackboardVariable<float> WalkingSpeed;
-    
-    // Direct block inputs
-    public float stoppingDistance = 0.2f;
+
+    public float speed = 2.5f;
+    public float stoppingDistance = 0.25f;
+
+    [Tooltip("How often (in seconds) to recalculate the A* path while moving (useful when chasing a moving target)")]
+    public float repathInterval = 0.35f;
 
     [Header("Sprite Views (Optional)")]
     public Sprite frontSprite;
@@ -26,6 +28,10 @@ public partial class MoveTo2DAction : Action
 
     private SpriteRenderer _spriteRenderer;
     private Rigidbody2D _rb2d;
+    private List<Vector2> _path;
+    private int _currentWaypointIndex;
+    private float _repathTimer;
+    private Vector2 _lastGoalPos;
 
     protected override Status OnStart()
     {
@@ -35,8 +41,18 @@ public partial class MoveTo2DAction : Action
         _spriteRenderer = Agent.Value.GetComponentInChildren<SpriteRenderer>();
         _rb2d = Agent.Value.GetComponent<Rigidbody2D>();
 
-        // Lock transform rotation flat to camera
         Agent.Value.transform.rotation = Quaternion.identity;
+
+        _repathTimer = 0f;
+        if (!RecalculatePath())
+        {
+            Vector2 startPos = Agent.Value.transform.position;
+            Vector2 goalPos = TargetPosition.Value;
+            if (Vector2.Distance(startPos, goalPos) <= stoppingDistance)
+                return Status.Success;
+
+            return Status.Failure;
+        }
 
         return Status.Running;
     }
@@ -47,32 +63,58 @@ public partial class MoveTo2DAction : Action
             return Status.Failure;
 
         Vector2 currentPos = Agent.Value.transform.position;
-        Vector2 target = TargetPosition.Value;
-        float distance = Vector2.Distance(currentPos, target);
+        Vector2 currentGoal = TargetPosition.Value;
 
-        // Check arrival
-        if (distance <= stoppingDistance)
+        // Check overall arrival at final destination
+        if (Vector2.Distance(currentPos, currentGoal) <= stoppingDistance)
         {
-            if (_rb2d != null)
-                _rb2d.linearVelocity = Vector2.zero;
-
+            StopMovement();
             return Status.Success;
         }
 
-        Vector2 dir = (target - currentPos).normalized;
+        // Periodically recalculate A* path if the target moved (e.g., chasing the player)
+        _repathTimer += Time.deltaTime;
+        if (_repathTimer >= repathInterval && Vector2.Distance(currentGoal, _lastGoalPos) > 0.25f)
+        {
+            _repathTimer = 0f;
+            RecalculatePath();
+        }
+
+        if (_path == null || _currentWaypointIndex >= _path.Count)
+        {
+            StopMovement();
+            return Status.Success;
+        }
+
+        Vector2 waypoint = _path[_currentWaypointIndex];
+        float distance = Vector2.Distance(currentPos, waypoint);
+
+        // Advance to next waypoint along the A* path
+        if (distance <= stoppingDistance)
+        {
+            _currentWaypointIndex++;
+            if (_currentWaypointIndex >= _path.Count)
+            {
+                StopMovement();
+                return Status.Success;
+            }
+            waypoint = _path[_currentWaypointIndex];
+        }
+
+        Vector2 dir = (waypoint - currentPos).normalized;
 
         if (_rb2d != null && !_rb2d.isKinematic)
         {
-            _rb2d.linearVelocity = dir * WalkingSpeed;
+            _rb2d.linearVelocity = dir * speed;
         }
         else
         {
-            Agent.Value.transform.position = Vector2.MoveTowards(currentPos, target, WalkingSpeed * Time.deltaTime);
+            Agent.Value.transform.position = Vector2.MoveTowards(currentPos, waypoint, speed * Time.deltaTime);
         }
 
         UpdateFacing(dir);
 
-        // Prevent Y-90 degree flips
+        // Enforce flat 2D rotation every frame
         Vector3 rot = Agent.Value.transform.eulerAngles;
         if (rot.x != 0f || rot.y != 0f)
         {
@@ -80,6 +122,38 @@ public partial class MoveTo2DAction : Action
         }
 
         return Status.Running;
+    }
+
+    private bool RecalculatePath()
+    {
+        Vector2 startPos = Agent.Value.transform.position;
+        Vector2 goalPos = TargetPosition.Value;
+        _lastGoalPos = goalPos;
+
+        if (GridPathfinder2D.Instance != null)
+        {
+            List<Vector2> newPath = GridPathfinder2D.Instance.FindPath(startPos, goalPos);
+            if (newPath != null && newPath.Count > 0)
+            {
+                _path = newPath;
+                // Skip index 0 if the guard is already standing right on the first node
+                _currentWaypointIndex = (_path.Count > 1 && Vector2.Distance(startPos, _path[0]) < stoppingDistance) ? 1 : 0;
+                return true;
+            }
+            return false;
+        }
+        else
+        {
+            _path = new List<Vector2> { goalPos };
+            _currentWaypointIndex = 0;
+            return true;
+        }
+    }
+
+    private void StopMovement()
+    {
+        if (_rb2d != null)
+            _rb2d.linearVelocity = Vector2.zero;
     }
 
     private void UpdateFacing(Vector2 direction)
@@ -107,7 +181,6 @@ public partial class MoveTo2DAction : Action
 
     protected override void OnEnd()
     {
-        if (_rb2d != null)
-            _rb2d.linearVelocity = Vector2.zero;
+        StopMovement();
     }
 }
