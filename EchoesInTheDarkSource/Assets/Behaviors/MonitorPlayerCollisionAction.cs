@@ -14,6 +14,7 @@ public partial class MonitorPlayerCollisionAction : Action
     [SerializeReference] public BlackboardVariable<GameObject> Player;
     [SerializeReference] public BlackboardVariable<List<GameObject>> HighPoints;
     [SerializeReference] public BlackboardVariable<bool> IsPlayerInRadius;
+    [SerializeReference] public BlackboardVariable<bool> DetectionCircleEnabled;
 
     private Collider2D _guardCircleCollider;
     private Collider2D _guardCollider;
@@ -46,9 +47,9 @@ public partial class MonitorPlayerCollisionAction : Action
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
             return Status.Success;
         }
-        
-        
-        bool isOverlapping = _guardCircleCollider.IsTouching(_playerCircleCollider);
+
+        Collider2D colliderToUse = DetectionCircleEnabled ? _guardCircleCollider : _guardCollider;
+        bool isOverlapping = colliderToUse.IsTouching(_playerCircleCollider);
         IsPlayerInRadius.Value = isOverlapping;
         
 
