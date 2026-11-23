@@ -1,8 +1,6 @@
-﻿using System;
-using Spotlights;
+﻿using Spotlights;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering.Universal;
 using UnityEngine.SceneManagement;
 
 namespace Player
@@ -128,7 +126,7 @@ namespace Player
                 SpeedState.Sprinting => sprintingNoiseMax,
                 SpeedState.Sneaking => sneakingNoiseMax,
                 SpeedState.Walking => walkingNoiseMax,
-                _ => 1f
+                _ => noiseMin
             };
 
             if (currentNoise > noiseMax)
