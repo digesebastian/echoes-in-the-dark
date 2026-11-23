@@ -1,7 +1,9 @@
 ﻿using System;
+using Spotlights;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
+using UnityEngine.SceneManagement;
 
 namespace Player
 {
@@ -34,11 +36,10 @@ namespace Player
         [SerializeField] private float walkingNoiseDelta = 0.1f;
         [SerializeField] private float sprintingNoiseDelta = 0.2f;
         [SerializeField] private float sneakingNoiseDelta = 0.04f;
-        [SerializeField] private Light2D spotlight;
-        private CircleCollider2D _spotlightCollider;
+        
+        [SerializeField] private PlayerSpotlight spotlight;
         
         private Animator _animator;
-        [SerializeField] private float shadowFade = 1.0f;
 
         private static readonly int HorizontalMovement = Animator.StringToHash("HorizontalMovement");
         private static readonly int VerticalMovement = Animator.StringToHash("VerticalMovement");
@@ -61,7 +62,6 @@ namespace Player
             _playerState = GetComponent<PlayerState>();
             
             moveAction.Enable();
-            _spotlightCollider = spotlight.GetComponentInChildren<CircleCollider2D>();
         }
 
         private void Update()
@@ -75,7 +75,7 @@ namespace Player
 
             UpdateAnimator(movementInput, currentSpeedState);
             UpdateNoiseEmitted(currentSpeedState);
-            UpdateSpotlight(); 
+            spotlight.SetRadius(_noiseEmitted); 
                 
             float currentSpeed = GetSpeed(currentSpeedState);
                 
@@ -84,10 +84,17 @@ namespace Player
 
         private void OnTriggerEnter2D(Collider2D other)
         {
-            if (other.CompareTag("Treasure"))
+            if (other.CompareTag("ClearLevelZone"))
             {
-                _playerState.HasClaimedTreasure = true;
-                Destroy(other.gameObject);
+                if (_playerState.HasClaimedTreasure)
+                {
+                    Debug.Log("u are winer");
+                    SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+                }
+                else
+                {
+                    Debug.LogWarning("This shouldn't happen");
+                }
             }
         }
 
@@ -142,16 +149,6 @@ namespace Player
                 };
                 
                 _noiseEmitted = Mathf.Min(currentNoise, noiseMax);
-            }
-        }
-
-        private void UpdateSpotlight()
-        {
-            spotlight.pointLightOuterRadius = _noiseEmitted;
-
-            if (_spotlightCollider)
-            {
-                _spotlightCollider.radius = spotlight.pointLightOuterRadius - shadowFade;
             }
         }
 
