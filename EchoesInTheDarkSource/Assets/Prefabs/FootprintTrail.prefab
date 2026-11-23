@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5553054724543275895}
   - component: {fileID: 2656808174861335679}
   m_Layer: 0
-  m_Name: footprint trail
+  m_Name: FootprintTrail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
