@@ -10,11 +10,26 @@ using Unity.Properties;
 public partial class ClearListAction : Action
 {
     [SerializeReference] public BlackboardVariable<List<GameObject>> List;
+    [SerializeReference] public BlackboardVariable<bool> DestroyObjects = new(false);
 
     protected override Status OnStart()
     {
+        if (List == null) return Status.Failure;
+        if (List.Value == null)
+        {
+            List.Value = new List<GameObject>();
+            return Status.Success;
+        }
+        if (DestroyObjects != null && DestroyObjects.Value)
+                {
+                    for (int i = 0; i < List.Value.Count; i++)
+                    {
+                        if (List.Value[i] != null)
+                            UnityEngine.Object.Destroy(List.Value[i]);
+                    }
+                }
         List.Value.Clear();
-        return Status.Running;
+        return Status.Success;
     }
 
     protected override Status OnUpdate()
