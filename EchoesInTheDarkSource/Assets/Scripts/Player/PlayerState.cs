@@ -12,5 +12,5 @@ namespace Player
         }
 
         public bool HasClaimedTreasure { get; set; } = false;
-    }
+    } 
 }

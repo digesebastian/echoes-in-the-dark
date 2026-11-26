@@ -12,6 +12,7 @@ TagManager:
   - Ground
   - Rock
   - ClearLevelZone
+  - Treasure
   layers:
   - Default
   - TransparentFX
@@ -51,6 +52,12 @@ TagManager:
     locked: 0
   - name: Projectile
     uniqueID: 2298506393
+    locked: 0
+  - name: Ripples
+    uniqueID: 895801471
+    locked: 0
+  - name: Walls
+    uniqueID: 2993939877
     locked: 0
   - name: Character
     uniqueID: 3229986483
