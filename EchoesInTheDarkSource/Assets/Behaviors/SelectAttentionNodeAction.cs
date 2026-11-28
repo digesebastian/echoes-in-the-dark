@@ -14,118 +14,98 @@ public partial class SelectAttentionNodeAction : Action
 {
     [SerializeReference] public BlackboardVariable<GameObject> Agent;
     [SerializeReference] public BlackboardVariable<Vector3> TargetPosition;
+    [SerializeReference] public BlackboardVariable<List<GameObject>> basic_points;
 
     [Tooltip("Exponential falloff penalty for distance (higher = nearer points favored more)")]
     [Range(1f, 4f)]
-    public float distanceBias = 2.0f;
+    public float distanceBias = 0.1f;
 
     [Tooltip("Weight multiplier added per starvation tick")]
-    public float starvationWeightBonus = 0.5f;
+    public float starvationWeightBonus = 2.5f;
 
     [Tooltip("Minimum distance a node must be from the guard to be considered (prevents camping the same node)")]
     public float minPickDistance = 1.0f;
 
-    private AttentionNode _currentClaim;
-
     protected override Status OnStart()
     {
-        if (Agent == null || Agent.Value == null || AttentionNodeManager.Instance == null)
+        if (Agent?.Value == null || basic_points?.Value == null || AttentionNodeManager.Instance == null)
             return Status.Failure;
-
-        // Remember what we were holding so we don't immediately pick it right back
-        AttentionNode lastVisitedNode = _currentClaim;
-
-        // 1. Release the old node lock
-        if (_currentClaim != null)
+        
+        // extract AttentionNode components from the assigned GameObjects
+        List<AttentionNode> assignedNodes = new List<AttentionNode>(basic_points.Value.Count);
+        for (int i = 0; i < basic_points.Value.Count; i++)
         {
-            AttentionNodeManager.Instance.ReleaseNode(_currentClaim);
-            _currentClaim = null;
-        }
+            GameObject pointObj = basic_points.Value[i];
+            if (pointObj == null) continue;
 
-        // 2. Fetch globally unclaimed nodes
-        List<AttentionNode> allAvailable = AttentionNodeManager.Instance.GetUnclaimedNodes();
-        if (allAvailable == null || allAvailable.Count == 0)
-            return Status.Failure;
-
-        Vector2 guardPos = Agent.Value.transform.position;
-
-        // 3. Filter out the current node (and any node too close)
-        List<AttentionNode> validCandidates = new List<AttentionNode>();
-        for (int i = 0; i < allAvailable.Count; i++)
-        {
-            AttentionNode node = allAvailable[i];
-
-            // Never re-pick the node we just arrived at if other options exist
-            if (node == lastVisitedNode && allAvailable.Count > 1)
-                continue;
-
-            // Optional: Ignore nodes within 1 meter if there are other nodes to explore
-            float dist = Vector2.Distance(guardPos, node.Position);
-            if (dist < minPickDistance && allAvailable.Count > 1)
-                continue;
-
-            validCandidates.Add(node);
-        }
-
-        // Fallback: If only 1 node exists in the whole map, allow picking it
-        if (validCandidates.Count == 0)
-        {
-            validCandidates = allAvailable;
-        }
-
-        // 4. Calculate weighted probability on valid candidates only
-        List<float> weights = new List<float>(validCandidates.Count);
-        float totalWeight = 0f;
-
-        for (int i = 0; i < validCandidates.Count; i++)
-        {
-            AttentionNode node = validCandidates[i];
-            float dist = Vector2.Distance(guardPos, node.Position);
-
-            // Proximity weight (safe from 0-distance explosion)
-            float proximity = 1f / Mathf.Pow(Mathf.Max(dist, 0.5f), distanceBias);
-            float starvationBonus = 1f + (node.starvationCounter * starvationWeightBonus);
-
-            float weight = proximity * node.basePriority * starvationBonus;
-            weights.Add(weight);
-            totalWeight += weight;
-        }
-
-        // 5. Roulette-wheel selection
-        float roll = UnityEngine.Random.Range(0f, totalWeight);
-        float runningSum = 0f;
-        AttentionNode chosen = validCandidates[0];
-
-        for (int i = 0; i < validCandidates.Count; i++)
-        {
-            runningSum += weights[i];
-            if (roll <= runningSum)
+            if (pointObj.TryGetComponent(out AttentionNode node))
             {
-                chosen = validCandidates[i];
+                assignedNodes.Add(node);
+            }
+            else
+            {
+                Debug.LogWarning($"[{Agent.Value.name}] '{pointObj.name}' in basic_points is missing an AttentionNode component.", pointObj);
+            }
+        }
+
+        if (assignedNodes.Count == 0)
+            return Status.Failure;
+
+        // find the node in this guard's list that is currently claimed (if any)
+        AttentionNode previousNode = null;
+        for (int i = 0; i < assignedNodes.Count; i++)
+        {
+            if (assignedNodes[i] != null && assignedNodes[i].isClaimed)
+            {
+                previousNode = assignedNodes[i];
                 break;
             }
         }
 
-        // 6. Lock the winning node
-        if (AttentionNodeManager.Instance.TryClaimNode(chosen))
+        // query unclaimed nodes (previousNode is still claimed so the guard won't pick the same spot twice in a row)
+        List<AttentionNode> candidates = AttentionNodeManager.Instance.GetAvailableNodes(assignedNodes);
+
+        // Fallback if this guard only has 1 node assigned in total
+        if (candidates.Count == 0 && previousNode != null)
         {
-            _currentClaim = chosen;
-            TargetPosition.Value = new Vector3(chosen.Position.x, chosen.Position.y, Agent.Value.transform.position.z);
+            AttentionNodeManager.Instance.ReleaseNode(previousNode);
+            previousNode = null;
+            candidates = AttentionNodeManager.Instance.GetAvailableNodes(assignedNodes);
+        }
+
+        if (candidates.Count == 0)
+            return Status.Failure;
+
+        // score remaining candidates
+        AttentionNode bestNode = null;
+        float bestScore = float.NegativeInfinity;
+        Vector2 guardPos = Agent.Value.transform.position;
+
+        for (int i = 0; i < candidates.Count; i++)
+        {
+            AttentionNode candidate = candidates[i];
+            float distance = Vector2.Distance(guardPos, candidate.Position);
+            float score = candidate.basePriority
+                        + (candidate.starvationCounter * starvationWeightBonus)
+                        - (distance * distanceBias);
+
+            if (score > bestScore)
+            {
+                bestScore = score;
+                bestNode = candidate;
+            }
+        }
+
+        // 4. Claim the new node, then release the previous one
+        if (bestNode != null && AttentionNodeManager.Instance.TryClaimNode(bestNode, assignedNodes))
+        {
+            if (previousNode != null)
+                AttentionNodeManager.Instance.ReleaseNode(previousNode);
+
+            TargetPosition.Value = bestNode.transform.position;
             return Status.Success;
         }
 
         return Status.Failure;
-    }
-
-    protected override void OnEnd()
-    {
-        if (CurrentStatus == Status.Interrupted || CurrentStatus == Status.Failure)
-        {
-            if (_currentClaim != null && AttentionNodeManager.Instance != null)
-            {
-                AttentionNodeManager.Instance.ReleaseNode(_currentClaim);
-                _currentClaim = null;
-            }
-        }
     }
 }

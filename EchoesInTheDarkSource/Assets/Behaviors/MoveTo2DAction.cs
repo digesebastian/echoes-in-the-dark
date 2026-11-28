@@ -6,7 +6,7 @@ using Action = Unity.Behavior.Action;
 [Serializable, Unity.Properties.GeneratePropertyBag]
 [NodeDescription(
     name: "Move To 2D",
-    story: "Move [Agent] to [TargetPosition]",
+    story: "Move [Agent] to [TargetPosition] with [Speed]",
     category: "Action/Navigation",
     id: "f2b3c4d5e6a17890123456789abcdef1")]
 public partial class MoveTo2DAction : Action
@@ -14,7 +14,7 @@ public partial class MoveTo2DAction : Action
     // Explicit declarations ensure the compiler always finds them
     [SerializeReference] public BlackboardVariable<GameObject> Agent;
     [SerializeReference] public BlackboardVariable<Vector3> TargetPosition;
-    [SerializeReference] public BlackboardVariable<float> WalkingSpeed;
+    [SerializeReference] public BlackboardVariable<float> Speed;
     
     // Direct block inputs
     public float stoppingDistance = 0.2f;
@@ -61,13 +61,13 @@ public partial class MoveTo2DAction : Action
 
         Vector2 dir = (target - currentPos).normalized;
 
-        if (_rb2d != null && !_rb2d.isKinematic)
+        if (_rb2d != null && _rb2d.bodyType == RigidbodyType2D.Dynamic)
         {
-            _rb2d.linearVelocity = dir * WalkingSpeed;
+            _rb2d.linearVelocity = dir * Speed;
         }
         else
         {
-            Agent.Value.transform.position = Vector2.MoveTowards(currentPos, target, WalkingSpeed * Time.deltaTime);
+            Agent.Value.transform.position = Vector2.MoveTowards(currentPos, target, Speed * Time.deltaTime);
         }
 
         UpdateFacing(dir);

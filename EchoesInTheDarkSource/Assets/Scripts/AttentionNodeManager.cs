@@ -5,8 +5,6 @@ public class AttentionNodeManager : MonoBehaviour
 {
     public static AttentionNodeManager Instance { get; private set; }
 
-    [SerializeField] private List<AttentionNode> allNodes = new List<AttentionNode>();
-
     void Awake()
     {
         if (Instance != null && Instance != this)
@@ -15,34 +13,28 @@ public class AttentionNodeManager : MonoBehaviour
             return;
         }
         Instance = this;
-
-        // Automatically discover all AttentionNode components in the scene if not populated in Inspector
-        if (allNodes.Count == 0)
-        {
-            allNodes.AddRange(FindObjectsByType<AttentionNode>(FindObjectsSortMode.None));
-        }
     }
-
-    /// <summary>
-    /// Returns all nodes that are currently not claimed by any guard.
-    /// </summary>
-    public List<AttentionNode> GetUnclaimedNodes()
-    {
-        List<AttentionNode> available = new List<AttentionNode>();
-        for (int i = 0; i < allNodes.Count; i++)
+    
+    public List<AttentionNode> GetAvailableNodes(IReadOnlyList<AttentionNode> basicPoints)
         {
-            if (allNodes[i] != null && !allNodes[i].isClaimed)
+            List<AttentionNode> available = new List<AttentionNode>();
+            if (basicPoints == null) return available;
+    
+            for (int i = 0; i < basicPoints.Count; i++)
             {
-                available.Add(allNodes[i]);
+                AttentionNode node = basicPoints[i];
+                if (node != null && !node.isClaimed)
+                {
+                    available.Add(node);
+                }
             }
+            return available;
         }
-        return available;
-    }
 
     /// <summary>
     /// Atomically claims target node for a guard and starves the rest.
     /// </summary>
-    public bool TryClaimNode(AttentionNode target)
+    public bool TryClaimNode(AttentionNode target, IReadOnlyList<AttentionNode> basicPoints)
     {
         if (target == null || target.isClaimed)
         {
@@ -51,12 +43,15 @@ public class AttentionNodeManager : MonoBehaviour
 
         target.Claim();
 
-        // Increment starvation counter for all other unclaimed nodes
-        for (int i = 0; i < allNodes.Count; i++)
+        if (basicPoints != null)
         {
-            if (allNodes[i] != null && allNodes[i] != target)
+            for (int i = 0; i < basicPoints.Count; i++)
             {
-                allNodes[i].IncrementStarvation();
+                AttentionNode node = basicPoints[i];
+                if (node != null && node != target)
+                {
+                    node.IncrementStarvation();
+                }
             }
         }
 

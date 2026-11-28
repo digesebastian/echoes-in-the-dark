@@ -22,8 +22,8 @@ TagManager:
   - Player
   - Projectile
   - Floor
-  - 
-  - 
+  - GuardCircle
+  - CoinCircle
   - 
   - 
   - 
