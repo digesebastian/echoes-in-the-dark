@@ -2,6 +2,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering.Universal;
+using System.Collections;
 
 namespace Player
 {
@@ -35,6 +36,17 @@ namespace Player
         [SerializeField] private float sprintingNoiseDelta = 0.2f;
         [SerializeField] private float sneakingNoiseDelta = 0.04f;
         [SerializeField] private Light2D spotlight;
+
+        [Header("Dash Settings")]
+        [SerializeField] private float dashSpeed = 20f;
+        [SerializeField] private float dashDuration = 0.2f;
+        [SerializeField] private bool useDashCooldown = true;
+        [SerializeField] private float dashCooldown = 1f;
+        [SerializeField] private TrailRenderer trailRenderer;
+
+        private bool _canDash = true;
+        private bool _isDashing;
+
         private CircleCollider2D _spotlightCollider;
         
         private Animator _animator;
@@ -66,7 +78,19 @@ namespace Player
 
         private void Update()
         {
-            Vector2 movementInput = moveAction.ReadValue<Vector2>();    
+            if (_isDashing)
+            {
+                return; // Skip movement updates while dashing
+            }
+    
+            Vector2 movementInput = moveAction.ReadValue<Vector2>();  
+            
+            if (Keyboard.current.mKey.wasPressedThisFrame && _canDash)
+            {
+                StartCoroutine(Dash(movementInput));
+                return;
+            }  
+
             bool isMoving =  movementInput != Vector2.zero;
             bool isSprintingInput = Keyboard.current.shiftKey.isPressed;
             bool isSneakingInput = !isSprintingInput && Keyboard.current.spaceKey.isPressed;
@@ -176,6 +200,41 @@ namespace Player
                 SpeedState.Sneaking => sneakSpeed,
                 _ => 0f
             };
+        }
+        
+        private IEnumerator Dash(Vector2 inputDirection)
+        {
+            _canDash = false;
+            _isDashing = true;
+
+            // Dash in the held direction, or fallback to the last facing direction if standing still
+            Vector2 dashDirection = inputDirection != Vector2.zero 
+                ? inputDirection.normalized 
+                : _playerState.FacingDirection.normalized;
+
+            rb.linearVelocity = dashDirection * dashSpeed;
+
+            if (trailRenderer != null)
+            {
+                trailRenderer.emitting = true;
+            }
+
+            yield return new WaitForSeconds(dashDuration);
+
+            if (trailRenderer != null)
+            {
+                trailRenderer.emitting = false;
+            }
+
+            rb.linearVelocity = Vector2.zero;
+            _isDashing = false;
+
+            if (useDashCooldown)
+            {
+                yield return new WaitForSeconds(dashCooldown);
+            }
+
+            _canDash = true;
         }
     }
 }
